@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Trumps Card - Brewery Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to right, #f97316, #ea580c); /* Orange gradient for brewery theme */
+        }
+        .card-container { /* Holds the card */
+            width: 100%;
+            max-width: 400px; /* Card width */
+            aspect-ratio: 2.5 / 3.7; 
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-container:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        .button-glow {
+            transition: box-shadow 0.2s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .button-glow:hover {
+            transform: scale(1.05);
+        }
+        .button-win {
+            background-color: #22c55e; /* Green */
+        }
+        .button-win:hover {
+            background-color: #16a34a;
+            box-shadow: 0 0 15px 5px rgba(34, 197, 94, 0.6); 
+        }
+        .button-lose {
+            background-color: #ef4444; /* Red */
+        }
+        .button-lose:hover {
+            background-color: #dc2626;
+            box-shadow: 0 0 15px 5px rgba(239, 68, 68, 0.6); 
+        }
+        .stat-bar-fill {
+            transition: width 0.5s ease-in-out;
+            background: linear-gradient(to right, #fbbf24, #f59e0b); /* Amber/gold for stat bars */
+        }
+        .win-screen {
+            background-color: rgba(0,0,0,0.75); 
+        }
+        .category-tag {
+            background-color: #d97706; /* Amber for category tag */
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center justify-center p-4 selection:bg-orange-500 selection:text-white">
+
+    <div id="gameArea" class="w-full max-w-lg mx-auto"> 
+        <div id="trumpCard" class="card-container bg-slate-800 rounded-xl shadow-2xl p-5 border-4 border-slate-700 flex flex-col justify-between mb-8 mx-auto">
+            <div>
+                <div class="flex justify-between items-start mb-3">
+                    <h2 id="cardName" class="text-3xl font-bold text-orange-400">Crafty Ale</h2> 
+                    <span id="cardCategory" class="category-tag text-sm text-white px-3 py-1 rounded-full font-semibold uppercase tracking-wider">Brewery</span> 
+                </div>
+                <div class="mb-4 h-64 bg-slate-700 rounded-lg overflow-hidden flex items-center justify-center"> 
+                    <img id="cardImage" src="https://placehold.co/380x240/a16207/fef3c7?text=Cool+Brew&font=inter"
+                         onerror="this.onerror=null;this.src='https://placehold.co/380x240/78350f/fef3c7?text=Image+Error&font=inter';"
+                         alt="Card Image" class="w-full h-full object-cover">
+                </div>
+                <div id="cardStats" class="space-y-3 text-base"> 
+                    </div>
+            </div>
+            <p id="cardDescription" class="text-sm text-slate-400 mt-5 italic">A fine brew from a renowned craft brewery.</p> 
+        </div>
+
+        <div class="flex justify-around items-center mb-6 space-x-4 max-w-[400px] mx-auto">
+            <button id="winButton" class="button-glow button-win text-white font-bold py-3 px-8 rounded-lg shadow-md w-1/2 text-lg">
+                Win
+            </button>
+            <button id="loseButton" class="button-glow button-lose text-white font-bold py-3 px-8 rounded-lg shadow-md w-1/2 text-lg">
+                Lose
+            </button>
+        </div>
+
+        <div id="scoreDisplay" class="text-center bg-slate-800 p-4 rounded-lg shadow-md border border-slate-700 max-w-[400px] mx-auto">
+            <h3 class="text-xl font-semibold mb-2 text-orange-300">Score</h3>
+            <p class="text-lg">Wins: <span id="winCount" class="font-bold text-green-400">0</span> / 10</p>
+        </div>
+    </div>
+
+    <div id="winScreen" class="win-screen fixed inset-0 flex-col items-center justify-center text-center p-8 z-50 hidden">
+        <div class="bg-slate-800 p-10 rounded-xl shadow-2xl border-2 border-orange-500">
+            <h2 class="text-5xl font-bold text-yellow-400 mb-6">YOU WIN!</h2>
+            <p class="text-2xl text-slate-200 mb-8">Congratulations on reaching 10 wins!</p>
+            <button id="playAgainButton" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-lg shadow-lg text-xl transition-transform transform hover:scale-105">
+                Play Again
+            </button>
+        </div>
+    </div>
+
+
+    <script>
+        // DOM Elements
+        const gameArea = document.getElementById('gameArea');
+        const winButton = document.getElementById('winButton');
+        const loseButton = document.getElementById('loseButton');
+        const winCountDisplay = document.getElementById('winCount');
+
+        const cardNameDisplay = document.getElementById('cardName');
+        const cardImageDisplay = document.getElementById('cardImage');
+        const cardStatsDisplay = document.getElementById('cardStats');
+        const cardCategoryDisplay = document.getElementById('cardCategory');
+        const cardDescriptionDisplay = document.getElementById('cardDescription');
+
+        const winScreen = document.getElementById('winScreen');
+        const playAgainButton = document.getElementById('playAgainButton');
+
+        // Score state
+        let wins = 0;
+        const maxWins = 10; // Target wins
+
+        // Sample card data - Brewery Themed
+        const cardDatabase = [
+            {
+                name: "Hoppy Haze IPA",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/f59e0b/fef3c7?text=Hoppy+Haze&font=inter",
+                description: "A juicy IPA bursting with tropical fruit notes and a smooth finish.",
+                stats: [
+                    { name: "ABV%", value: 6.8, max: 12, unit: "%" }, 
+                    { name: "Tinnie Size", value: 440, max: 500, unit: "ml" }, 
+                    { name: "Cost", value: 4.50, max: 8, unit: "£" }, 
+                    { name: "Untappd Rating", value: 4.1, max: 5, unit: "/5" } 
+                ]
+            },
+            {
+                name: "Dark Roast Stout",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/3f3f46/e7e5e4?text=Dark+Roast&font=inter",
+                description: "Rich and complex with notes of coffee, chocolate, and roasted malt.",
+                stats: [
+                    { name: "ABV%", value: 7.5, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 330, max: 500, unit: "ml" },
+                    { name: "Cost", value: 5.00, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 4.3, max: 5, unit: "/5" }
+                ]
+            },
+            {
+                name: "Crisp Lager",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/fef08a/422006?text=Crisp+Lager&font=inter",
+                description: "Clean, refreshing, and perfectly balanced. An easy-drinking classic.",
+                stats: [
+                    { name: "ABV%", value: 4.5, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 330, max: 500, unit: "ml" },
+                    { name: "Cost", value: 3.50, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 3.8, max: 5, unit: "/5" }
+                ]
+            },
+            {
+                name: "Fruity Sour Ale",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/ec4899/fdf2f8?text=Fruity+Sour&font=inter",
+                description: "Tart and tangy with a vibrant burst of berry flavors.",
+                stats: [
+                    { name: "ABV%", value: 5.2, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 440, max: 500, unit: "ml" },
+                    { name: "Cost", value: 4.80, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 4.0, max: 5, unit: "/5" }
+                ]
+            },
+             {
+                name: "Session Pale Ale",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/84cc16/f7fee7?text=Session+Pale&font=inter",
+                description: "Light, refreshing, and packed with hop aroma for easy drinking.",
+                stats: [
+                    { name: "ABV%", value: 4.2, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 330, max: 500, unit: "ml" },
+                    { name: "Cost", value: 3.80, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 3.9, max: 5, unit: "/5" }
+                ]
+            },
+            // --- NEW CARDS START HERE ---
+            {
+                name: "Imperial Coffee Porter",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/4a2c2a/d1c7c7?text=Imp+Porter&font=inter",
+                description: "A big, bold porter infused with freshly roasted coffee beans.",
+                stats: [
+                    { name: "ABV%", value: 9.0, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 330, max: 500, unit: "ml" },
+                    { name: "Cost", value: 5.50, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 4.4, max: 5, unit: "/5" }
+                ]
+            },
+            {
+                name: "Citra Hopped Pale",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/fde047/451a03?text=Citra+Pale&font=inter",
+                description: "Showcasing the vibrant citrus and grapefruit notes of Citra hops.",
+                stats: [
+                    { name: "ABV%", value: 5.5, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 440, max: 500, unit: "ml" },
+                    { name: "Cost", value: 4.20, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 4.0, max: 5, unit: "/5" }
+                ]
+            },
+            {
+                name: "Belgian Witbier",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/fed7aa/7c2d12?text=Witbier&font=inter",
+                description: "A hazy wheat beer with notes of coriander and orange peel.",
+                stats: [
+                    { name: "ABV%", value: 4.8, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 330, max: 500, unit: "ml" },
+                    { name: "Cost", value: 4.00, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 3.7, max: 5, unit: "/5" }
+                ]
+            },
+            {
+                name: "Raspberry Ripple Sour",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/f472b6/fbcfe8?text=Rasp+Sour&font=inter",
+                description: "Sweet raspberries meet tart sourness, like a dessert in a glass.",
+                stats: [
+                    { name: "ABV%", value: 4.0, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 330, max: 500, unit: "ml" },
+                    { name: "Cost", value: 4.90, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 4.2, max: 5, unit: "/5" }
+                ]
+            },
+            {
+                name: "Classic Best Bitter",
+                category: "Brewery",
+                image: "https://placehold.co/380x240/b45309/fef3c7?text=Best+Bitter&font=inter",
+                description: "A traditional English ale with balanced malt and hop character.",
+                stats: [
+                    { name: "ABV%", value: 4.3, max: 12, unit: "%" },
+                    { name: "Tinnie Size", value: 500, max: 500, unit: "ml" }, // Pint can
+                    { name: "Cost", value: 3.20, max: 8, unit: "£" },
+                    { name: "Untappd Rating", value: 3.6, max: 5, unit: "/5" }
+                ]
+            }
+            // --- NEW CARDS END HERE ---
+        ];
+
+        let currentCardIndex; 
+        let availableCardIndices = [];
+
+        // Helper function to shuffle an array (Fisher-Yates shuffle)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; 
+            }
+        }
+
+        // Function to initialize or re-initialize the deck of available cards
+        function initializeCardDeck() {
+            if (cardDatabase.length === 0) {
+                console.error("Card database is empty. Cannot initialize deck.");
+                availableCardIndices = [];
+                return;
+            }
+            availableCardIndices = Array.from(cardDatabase.keys()); 
+            shuffleArray(availableCardIndices); 
+        }
+
+        // Function to update the score display
+        function updateScore() {
+            winCountDisplay.textContent = wins;
+        }
+
+        // Function to render a card
+        function renderCard(cardData) {
+            if (!cardData) {
+                console.error("Attempted to render an undefined card.");
+                cardNameDisplay.textContent = "Error";
+                cardImageDisplay.src = "https://placehold.co/380x240/ff0000/ffffff?text=Card+Error&font=inter";
+                cardStatsDisplay.innerHTML = '<p class="text-red-400">Could not load card data.</p>';
+                cardCategoryDisplay.textContent = "Error";
+                cardDescriptionDisplay.textContent = "Please try again or check data.";
+                return;
+            }
+            cardNameDisplay.textContent = cardData.name;
+            cardImageDisplay.src = cardData.image;
+            cardImageDisplay.alt = cardData.name;
+            cardCategoryDisplay.textContent = cardData.category; 
+            cardDescriptionDisplay.textContent = cardData.description;
+
+            cardStatsDisplay.innerHTML = ''; 
+
+            cardData.stats.forEach(stat => {
+                const percentage = stat.max > 0 ? (stat.value / stat.max) * 100 : 0;
+                const statElement = document.createElement('div');
+                statElement.classList.add('stat-item', 'mb-1.5'); 
+                const valueDisplay = `${stat.value}${stat.unit ? ' ' + stat.unit : ''}`;
+
+                statElement.innerHTML = `
+                    <div class="flex justify-between items-center text-slate-300">
+                        <span class="font-medium">${stat.name}</span>
+                        <span class="font-semibold text-orange-300">${valueDisplay}</span>
+                    </div>
+                    <div class="w-full bg-slate-600 rounded-full h-3"> 
+                        <div class="stat-bar-fill h-3 rounded-full" style="width: 0%;"></div>
+                    </div>
+                `;
+                cardStatsDisplay.appendChild(statElement);
+                setTimeout(() => {
+                    statElement.querySelector('.stat-bar-fill').style.width = `${percentage}%`;
+                }, 100); 
+            });
+        }
+
+        // Function to load a new random card
+        function loadNewCard() {
+            if (cardDatabase.length === 0) {
+                renderCard(null); 
+                winButton.disabled = true;
+                loseButton.disabled = true;
+                return;
+            }
+
+            if (availableCardIndices.length === 0) {
+                initializeCardDeck();
+                if (availableCardIndices.length === 0) {
+                     renderCard(null);
+                     winButton.disabled = true;
+                     loseButton.disabled = true;
+                     return;
+                }
+            }
+            
+            currentCardIndex = availableCardIndices.pop(); 
+            renderCard(cardDatabase[currentCardIndex]);
+
+            const cardElement = document.getElementById('trumpCard');
+            cardElement.classList.remove('animate-new-card');
+            void cardElement.offsetWidth; 
+            cardElement.classList.add('animate-new-card');
+        }
+
+        // Function to show the win screen
+        function showWinScreen() {
+            gameArea.classList.add('hidden');
+            winScreen.classList.remove('hidden');
+            winScreen.classList.add('flex'); 
+        }
+
+        // Function to reset the game
+        function resetGame() {
+            wins = 0;
+            updateScore();
+            winScreen.classList.add('hidden');
+            winScreen.classList.remove('flex');
+            gameArea.classList.remove('hidden');
+            
+            winButton.disabled = false;
+            loseButton.disabled = false;
+
+            initializeCardDeck(); 
+            loadNewCard(); 
+        }
+
+        // Event Listeners
+        winButton.addEventListener('click', () => {
+            if (wins < maxWins) {
+                wins++;
+                updateScore();
+                if (wins === maxWins) {
+                    showWinScreen();
+                } else {
+                    loadNewCard();
+                }
+            }
+        });
+
+        loseButton.addEventListener('click', () => {
+            if (wins < maxWins) { 
+                 loadNewCard();
+            }
+        });
+
+        playAgainButton.addEventListener('click', () => {
+            resetGame();
+        });
+
+        // Initial setup
+        updateScore();
+        initializeCardDeck(); 
+        loadNewCard(); 
+
+        // CSS for card change animation
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = `
+            @keyframes newCardAnimation {
+                0% { transform: scale(0.95) rotateY(15deg); opacity: 0.7; }
+                50% { transform: scale(1.02) rotateY(-10deg); opacity: 0.9; }
+                100% { transform: scale(1) rotateY(0deg); opacity: 1; }
+            }
+            .animate-new-card {
+                animation: newCardAnimation 0.6s ease-out;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+    </script>
+</body>
+</html>
