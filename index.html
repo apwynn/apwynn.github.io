@@ -125,7 +125,7 @@
             border-color: #388E3C !important;
             animation: none !important; 
         }
-        .option-btn.incorrect { /* General incorrect, not the "Solar" one */
+        .option-btn.incorrect { 
             background-color: #F44336 !important; 
             color: white !important;
             border-color: #D32F2F !important;
@@ -283,17 +283,9 @@
             border: 2px solid #f7b733;
         }
         
-        /* Screen Shake Animation */
-        .screen-shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-            transform: translate3d(0, 0, 0);
-        }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
+        /* Screen Shake Animation Removed */
+        /* .screen-shake { ... } */
+        /* @keyframes shake { ... } */
 
 
         @media (max-width: 640px) { 
@@ -371,7 +363,7 @@
         <div class="screen-content">
             <div id="start-screen">
                 <h1 class="retro-title">Top of the Hops</h1>
-                <img id="start-screen-graphic" src="https://cdn.britannica.com/41/10941-050-817C0823/flowers-Hop-vine-brewing.jpg" alt="Top of the Hops Game Graphic">
+                <img id="start-screen-graphic" src="https://placehold.co/120x120/6B8E23/FFFFFF?text=Hop!" alt="Top of the Hops Game Graphic">
                 
                 <p class="mb-4 text-lg">Match the image to its name!</p>
                 <button id="start-game-btn" class="retro-btn start-screen-btn">Start Game</button>
@@ -380,7 +372,7 @@
             <div id="game-screen" class="hidden">
                 <h1 class="retro-title text-2xl">Top of the Hops</h1>
                 <div class="flex justify-between items-center mb-4">
-                    <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span></div> 
+                    <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span>/8</div> 
                     <div id="score-info" class="text-sm">Score: <span id="current-score-display">0</span></div>
                 </div>
                 <img id="game-image" src="https://placehold.co/550x440/1a1a2e/1a1a2e?text=Loading..." alt="Match this image"> 
@@ -392,7 +384,7 @@
             <div id="final-score-screen" class="hidden">
                 <h2 class="retro-title">Game Over!</h2>
                  <h3 class="retro-title text-xl mb-2">Top of the Hops</h3>
-                <p class="text-xl mb-2">Your Final Score: <span id="final-score-display">0</span></p> 
+                <p class="text-xl mb-2">Your Final Score: <span id="final-score-display">0</span> / 80</p> 
                 <p id="player-nickname"></p> 
                 <div id="rank-icon-display"></div> 
                 <button id="play-again-final-btn" class="retro-btn">Play Again</button>
@@ -420,7 +412,7 @@
 
     <script type="module">
         // DOM Elements
-        const appContainer = document.getElementById('app-container'); // For screen shake
+        const appContainer = document.getElementById('app-container'); 
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
         const finalScoreScreen = document.getElementById('final-score-screen');
@@ -446,7 +438,7 @@
         const confettiContainer = document.getElementById('confetti-container');
         const starsBackground = document.getElementById('stars-background');
  
-        const gameItems = [ 
+   const gameItems = [ 
             { id: 'item1', imageSrc: 'https://apwynn.github.io/Mosaic.jpg', name: 'Mosaic' },
             { id: 'item2', imageSrc: 'https://apwynn.github.io/Citra.jpg', name: 'Citra' },
             { id: 'item3', imageSrc: 'https://apwynn.github.io/Cascade.jpg', name: 'Cascade' },
@@ -457,6 +449,7 @@
             { id: 'item8', imageSrc: 'https://apwynn.github.io/Saaz.jpg', name: 'Saaz' },
             { id: 'item9', imageSrc: 'https://apwynn.github.io/Mosaic.jpg', name: 'Solar' } // "Solar" item
         ];
+
 
         const NUM_ROUNDS = 8; 
 
@@ -485,7 +478,7 @@
 
 
         // --- Sound Effects ---
-        let correctSynth, incorrectSynth, themeSynth, themeTune, badChoiceSynth; // Added badChoiceSynth
+        let correctSynth, incorrectSynth, themeSynth, themeTune; // Removed badChoiceSynth
         let isThemePlaying = false;
         const initialThemeVolume = -18; 
 
@@ -504,66 +497,46 @@
                 volume: -15 
             }).toDestination();
 
-            // New sound for the "Solar" bad choice
-            badChoiceSynth = new Tone.Synth({
-                oscillator: { type: "sawtooth" },
-                envelope: { attack: 0.01, decay: 0.5, sustain: 0, release: 0.2 },
-                volume: -5 // Louder for impact
-            }).toDestination();
-            const distortion = new Tone.Distortion(0.6).toDestination();
-            badChoiceSynth.connect(distortion);
-
-
             themeSynth = new Tone.Synth({
                 oscillator: { type: "pulse", width: 0.4 },
                 envelope: { attack: 0.01, decay: 0.1, sustain: 0.2, release: 0.3 },
                 volume: initialThemeVolume 
             }).toDestination();
             
-const melody = [
-  // Bar 0: "It's the eye of the ti-ger"
-  { time: "0:0:0", note: "G3", duration: "8n" },   // It's
-  { time: "0:0:2", note: "G3", duration: "8n" },   // the
-  { time: "0:1:0", note: "Eb4", duration: "8n" },  // eye
-  { time: "0:1:2", note: "Eb4", duration: "8n" },  // of
-  { time: "0:2:0", note: "Eb4", duration: "8n" },  // the
-  { time: "0:2:2", note: "D4", duration: "8n" },   // ti-
-  { time: "0:3:0", note: "C4", duration: "8n" },   // -ger
-  // (Eighth rest implied for 0:3:2, 0:3:3)
-
-  // Bar 1: "it's the thrill of the fight"
-  { time: "1:0:0", note: "G3", duration: "8n" },   // it's
-  { time: "1:0:2", note: "G3", duration: "8n" },   // the
-  { time: "1:1:0", note: "F4", duration: "8n" },   // thrill
-  { time: "1:1:2", note: "F4", duration: "8n" },   // of
-  { time: "1:2:0", note: "F4", duration: "8n" },   // the
-  { time: "1:2:2", note: "Eb4", duration: "8n" },  // fight
-  { time: "1:3:0", note: "D4", duration: "8n" },   // (-ight)
-  // (Eighth rest implied for 1:3:2, 1:3:3)
-
-  // Bar 2: "Ri-sin' up to the chal-lenge"
-  { time: "2:0:0", note: "C4", duration: "8n" },   // Ri-
-  { time: "2:0:2", note: "D4", duration: "8n" },   // -sin'
-  { time: "2:1:0", note: "Eb4", duration: "4n" },  // up
-  { time: "2:2:0", note: "Eb4", duration: "8n" },  // to
-  { time: "2:2:2", note: "F4", duration: "8n" },   // the
-  { time: "2:3:0", note: "G4", duration: "8n" },   // chal-
-  { time: "2:3:2", note: "G4", duration: "8n" },   // -lenge
-
-  // Bar 3: "of our ri-val"
-  { time: "3:0:0", note: "Ab4", duration: "8n" },  // of
-  { time: "3:0:2", note: "G4", duration: "8n" },   // our
-  // "ri-" (F4) is a dotted quarter note (6 sixteenths long):
-  { time: "3:1:0", note: "F4", duration: "4n" },   // ri- (first 4 sixteenths of "ri-")
-  { time: "3:2:0", note: "F4", duration: "8n" },   // ri- (next 2 sixteenths of "ri-", completing the dotted quarter)
-  { time: "3:2:2", note: "Eb4", duration: "8n" }   // -val
-];
+            const melody = [
+              { time: "0:0:0", note: "G3", duration: "8n" },   
+              { time: "0:0:2", note: "G3", duration: "8n" },   
+              { time: "0:1:0", note: "Eb4", duration: "8n" },  
+              { time: "0:1:2", note: "Eb4", duration: "8n" },  
+              { time: "0:2:0", note: "Eb4", duration: "8n" },  
+              { time: "0:2:2", note: "D4", duration: "8n" },   
+              { time: "0:3:0", note: "C4", duration: "8n" },   
+              { time: "1:0:0", note: "G3", duration: "8n" },   
+              { time: "1:0:2", note: "G3", duration: "8n" },   
+              { time: "1:1:0", note: "F4", duration: "8n" },   
+              { time: "1:1:2", note: "F4", duration: "8n" },   
+              { time: "1:2:0", note: "F4", duration: "8n" },   
+              { time: "1:2:2", note: "Eb4", duration: "8n" },  
+              { time: "1:3:0", note: "D4", duration: "8n" },   
+              { time: "2:0:0", note: "C4", duration: "8n" },   
+              { time: "2:0:2", note: "D4", duration: "8n" },   
+              { time: "2:1:0", note: "Eb4", duration: "4n" },  
+              { time: "2:2:0", note: "Eb4", duration: "8n" },  
+              { time: "2:2:2", note: "F4", duration: "8n" },   
+              { time: "2:3:0", note: "G4", duration: "8n" },   
+              { time: "2:3:2", note: "G4", duration: "8n" },   
+              { time: "3:0:0", note: "Ab4", duration: "8n" },  
+              { time: "3:0:2", note: "G4", duration: "8n" },   
+              { time: "3:1:0", note: "F4", duration: "4n" },   
+              { time: "3:2:0", note: "F4", duration: "8n" },   
+              { time: "3:2:2", note: "Eb4", duration: "8n" }   
+            ];
 
             themeTune = new Tone.Sequence((time, noteEvent) => {
                 themeSynth.triggerAttackRelease(noteEvent.note, noteEvent.duration, time);
             }, melody, "4m"); 
             themeTune.loop = true;
-            Tone.Transport.bpm.value = 436; 
+            Tone.Transport.bpm.value = 200; 
         }
         
         function playCorrectSound() {
@@ -580,12 +553,7 @@ const melody = [
             }
         }
         
-        function playBadChoiceSound() {
-            if (badChoiceSynth && Tone.context.state === 'running') {
-                badChoiceSynth.triggerAttackRelease("C2", "2n", Tone.now()); // Low, long, ominous
-            }
-        }
-
+        // playBadChoiceSound function removed
 
         function startThemeMusic() {
             if (typeof Tone === 'undefined' || !themeTune || isThemePlaying) return;
@@ -751,21 +719,7 @@ const melody = [
             const optionButtons = Array.from(optionsAreaEl.querySelectorAll('.option-btn'));
             optionButtons.forEach(btn => btn.disabled = true);
 
-            if (selectedName === "Solar") {
-                playBadChoiceSound();
-                appContainer.classList.add('screen-shake');
-                feedbackAreaEl.textContent = "That's not a hop! Game Over!";
-                feedbackAreaEl.style.color = "#FF4500"; // More alarming color
-                score = 0;
-                currentRound = NUM_ROUNDS; // End the game
-                setTimeout(() => {
-                    appContainer.classList.remove('screen-shake');
-                    proceedToNextStep();
-                }, 1500); // Allow time for shake and message
-                return; // Exit early
-            }
-
-
+            // "Solar" instant lose mechanic removed. It's now a regular incorrect guess if not the correct answer.
             if (selectedName === correctName) {
                 playCorrectSound();
                 score += 10;
