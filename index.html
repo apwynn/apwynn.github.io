@@ -372,7 +372,7 @@
             <div id="game-screen" class="hidden">
                 <h1 class="retro-title text-2xl">Top of the Hops</h1>
                 <div class="flex justify-between items-center mb-4">
-                    <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span>/8</div> 
+                    <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span></div> 
                     <div id="score-info" class="text-sm">Score: <span id="current-score-display">0</span></div>
                 </div>
                 <img id="game-image" src="https://placehold.co/550x440/1a1a2e/1a1a2e?text=Loading..." alt="Match this image"> 
@@ -438,6 +438,7 @@
         const confettiContainer = document.getElementById('confetti-container');
         const starsBackground = document.getElementById('stars-background');
  
+
    const gameItems = [ 
             { id: 'item1', imageSrc: 'https://apwynn.github.io/Mosaic.jpg', name: 'Mosaic' },
             { id: 'item2', imageSrc: 'https://apwynn.github.io/Citra.jpg', name: 'Citra' },
@@ -536,7 +537,7 @@
                 themeSynth.triggerAttackRelease(noteEvent.note, noteEvent.duration, time);
             }, melody, "4m"); 
             themeTune.loop = true;
-            Tone.Transport.bpm.value = 436; 
+            Tone.Transport.bpm.value = 4; 
         }
         
         function playCorrectSound() {
