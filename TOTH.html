@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top of the Hops</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #121222; /* Slightly darker base for stars to show */
+            color: #e0e0e0; /* Light grey */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1rem;
+            overflow: hidden; /* Prevent scrollbars from stars/confetti */
+            position: relative; 
+        }
+
+        /* Animated Background Styles */
+        .stars-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Behind all content */
+            overflow: hidden; /* Ensure stars don't cause scrollbars */
+            background: #121222; /* Match body or slightly different for effect */
+        }
+
+        .star {
+            position: absolute;
+            background-color: rgba(224, 224, 224, 0.8); /* Increased opacity */
+            border-radius: 50%;
+            animation: moveStar 15s linear infinite; /* Shortened duration for faster perceived speed */
+            box-shadow: 0 0 6px rgba(224, 224, 224, 0.4), 0 0 12px rgba(224, 224, 224, 0.3); /* Enhanced glow */
+        }
+
+        @keyframes moveStar {
+            0% {
+                transform: translateY(0vh) translateX(0vw) scale(1);
+                opacity: 0;
+            }
+            10%, 90% { /* Stars visible for most of the animation */
+                opacity: 0.9; /* Slightly more opaque during visible phase */
+            }
+            100% {
+                transform: translateY(100vh) translateX(calc(var(--random-x) * 30vw - 15vw)) scale(0.6); /* Increased horizontal movement range, slightly larger end scale */
+                opacity: 0;
+            }
+        }
+
+
+        .container {
+            background-color: #162447; /* Darker blue */
+            border: 4px solid #f7b733; /* Yellow-orange border */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #f7b733aa;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative; 
+            z-index: 1; 
+        }
+        .retro-title {
+            color: #fc5185; /* Pink */
+            text-shadow: 2px 2px #3fc1c9; /* Cyan shadow */
+            margin-bottom: 1rem; 
+            font-size: 1.8rem; 
+            line-height: 1.2;
+        }
+        .retro-btn {
+            background-color: #3fc1c9; /* Cyan */
+            color: #1a1a2e;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #f7b733;
+            border-radius: 5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0.5rem; 
+            font-size: 0.9rem;
+        }
+        .retro-btn:hover {
+            background-color: #f7b733;
+            color: #162447;
+            box-shadow: 0 0 10px #fc5185;
+        }
+        .retro-btn:disabled, .option-btn.greyed-out {
+            background-color: #555;
+            color: #999;
+            border-color: #777;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .start-screen-btn { 
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+        .option-btn {
+            min-height: 35px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem; 
+            line-height: 1.1;
+            padding: 0.4rem 0.8rem; 
+            margin: 0.1rem; 
+            width: calc((100% - 1rem) / 3); 
+        }
+        .option-btn.correct {
+            background-color: #4CAF50 !important; 
+            color: white !important;
+            border-color: #388E3C !important;
+            animation: none !important; 
+        }
+        .option-btn.incorrect {
+            background-color: #F44336 !important; 
+            color: white !important;
+            border-color: #D32F2F !important;
+            animation: none !important;
+        }
+        .hidden {
+            display: none !important;
+        }
+        #game-image { 
+            width: 100%;
+            max-width: 550px; 
+            height: 440px;    
+            object-fit: cover;
+            border: 3px solid #fc5185;
+            border-radius: 5px;
+            margin: 1rem auto;
+            background-color: #333; 
+        }
+        input[type="text"] { 
+            background-color: #e0e0e0;
+            color: #1a1a2e;
+            border: 2px solid #fc5185;
+            padding: 0.5rem;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            margin: 0.5rem auto 1rem auto; 
+            display: block; 
+        }
+        .feedback-message {
+            min-height: 24px; 
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #f7b733;
+        }
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; 
+        }
+        .modal-content {
+            background-color: #162447;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 3px solid #fc5185;
+            text-align: center;
+        }
+        .modal-content p {
+            margin-bottom: 1rem;
+            color: #e0e0e0;
+        }
+
+        #start-screen-graphic {
+            width: 100px; 
+            height: 120px; 
+            margin: 1rem auto 1.5rem auto;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; } 
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+        
+        .flash-correct { 
+            animation: flash-green 0.5s 3; 
+        }
+
+        @keyframes flash-green {
+            0%, 100% { background-color: #4CAF50; color: white; border-color: #388E3C; }
+            50% { background-color: #3fc1c9; color: #1a1a2e; border-color: #f7b733; }
+        }
+
+        .confetti-particle {
+            position: absolute; 
+            width: 10px;
+            height: 10px;
+            background-color: red; 
+            opacity: 0;
+            border-radius: 50%; 
+            pointer-events: none; 
+            z-index: 999; 
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(0px) rotateZ(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg); 
+                opacity: 0;
+            }
+        }
+        #player-nickname {
+            color: #f7b733; 
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            min-height: 1.5rem; 
+        }
+        #rank-icon-display {
+            width: 80px; /* Increased size */
+            height: 80px; /* Increased size */
+            margin: 0.5rem auto 1.5rem auto; 
+        }
+        #rank-icon-display svg {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        @media (max-width: 640px) { 
+            .container {
+                padding: 1rem;
+            }
+            .retro-title {
+                font-size: 1.5rem;
+            }
+            .retro-btn { 
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+             .option-btn { 
+                min-height: 30px; 
+                font-size: 0.5rem; 
+                padding: 0.3rem 0.6rem; 
+                width: calc((100% - 1rem) / 3); 
+            }
+            .start-screen-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            #options-area {
+                gap: 0.5rem; 
+            }
+            #game-image { 
+                max-width: 490px; 
+                height: 350px;    
+            }
+            #start-screen-graphic {
+                width: 80px; 
+                height: 100px; 
+            }
+             #player-nickname {
+                font-size: 1rem;
+            }
+            #rank-icon-display {
+                width: 70px; /* Adjusted for medium screens */
+                height: 70px;
+            }
+        }
+         @media (max-width: 480px) { 
+            .option-btn {
+                 width: calc((100% - 0.5rem) / 2); 
+                 min-height: 30px; 
+                 font-size: 0.5rem; 
+                 padding: 0.3rem 0.6rem; 
+            }
+             #game-image { 
+                max-width: 420px; 
+                height: 315px;    
+            }
+            .retro-title {
+                font-size: 1.3rem;
+            }
+             #start-screen-graphic {
+                width: 70px; 
+                height: 90px; 
+            }
+            #rank-icon-display {
+                width: 60px; /* Adjusted for small screens */
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-bg" id="stars-background"></div> 
+
+    <div id="app-container" class="container">
+        <div id="start-screen">
+            <h1 class="retro-title">Top of the Hops</h1>
+            <svg id="start-screen-graphic" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="hopGradientGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#5cb85c;stop-opacity:1" /> 
+                        <stop offset="100%" style="stop-color:#3d8b3d;stop-opacity:1" /> 
+                    </linearGradient>
+                     <filter id="थोड़ा_धुंधलापन">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="0.7"/>
+                    </filter>
+                </defs>
+                <path d="M50 115 L50 100" stroke="#7a5547" stroke-width="4" />
+                <ellipse cx="50" cy="85" rx="20" ry="28" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="40" cy="75" rx="18" ry="25" fill="url(#hopGradientGreen)" transform="rotate(-15 40 75)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="60" cy="75" rx="18" ry="25" fill="url(#hopGradientGreen)" transform="rotate(15 60 75)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="50" cy="65" rx="16" ry="22" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="42" cy="58" rx="15" ry="20" fill="url(#hopGradientGreen)" transform="rotate(-20 42 58)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="58" cy="58" rx="15" ry="20" fill="url(#hopGradientGreen)" transform="rotate(20 58 58)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="50" cy="48" rx="13" ry="18" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="45" cy="42" rx="12" ry="16" fill="url(#hopGradientGreen)" transform="rotate(-25 45 42)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="55" cy="42" rx="12" ry="16" fill="url(#hopGradientGreen)" transform="rotate(25 55 42)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <ellipse cx="50" cy="35" rx="10" ry="14" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                 <ellipse cx="50" cy="25" rx="7" ry="10" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                <path d="M30 90 Q 35 70 50 80" fill="none" stroke="#4cae4c" stroke-width="3"/>
+                <path d="M70 90 Q 65 70 50 80" fill="none" stroke="#4cae4c" stroke-width="3"/>
+            </svg>
+            <p class="mb-4 text-lg">Match the image to its name!</p>
+            <button id="start-game-btn" class="retro-btn start-screen-btn">Start Game</button>
+            </div>
+
+        <div id="game-screen" class="hidden">
+            <h1 class="retro-title text-2xl">Top of the Hops</h1>
+            <div class="flex justify-between items-center mb-4">
+                <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span>/9</div>
+                <div id="score-info" class="text-sm">Score: <span id="current-score-display">0</span></div>
+            </div>
+            <img id="game-image" src="https://placehold.co/550x440/1a1a2e/1a1a2e?text=Loading..." alt="Match this image"> 
+            <div id="options-area" class="flex flex-wrap justify-center gap-2 my-4">
+                </div>
+            <div id="feedback-area" class="feedback-message"></div>
+        </div>
+
+        <div id="final-score-screen" class="hidden">
+            <h2 class="retro-title">Game Over!</h2>
+             <h3 class="retro-title text-xl mb-2">Top of the Hops</h3>
+            <p class="text-xl mb-2">Your Final Score: <span id="final-score-display">0</span></p>
+            <p id="player-nickname"></p> 
+            <div id="rank-icon-display"></div> 
+            <button id="play-again-final-btn" class="retro-btn">Play Again</button>
+            </div>
+
+        <div id="loading-modal" class="modal hidden">
+            <div class="modal-content">
+                <p id="loading-message">Loading...</p>
+            </div>
+        </div>
+         <div id="message-modal" class="modal hidden">
+            <div class="modal-content">
+                <p id="message-text"></p>
+                <button id="message-ok-btn" class="retro-btn">OK</button>
+            </div>
+        </div>
+        <div id="confetti-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1001;"></div>
+
+    </div>
+
+    <script type="module">
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
+
+        // Firebase Config
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "YOUR_API_KEY", 
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-topofthehops-app';
+
+        // Initialize Firebase App and Auth
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        setLogLevel('debug'); 
+
+        let userId = null; 
+        let isAuthReady = false;
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const finalScoreScreen = document.getElementById('final-score-screen');
+        
+        const startGameBtn = document.getElementById('start-game-btn');
+        const playAgainFinalBtn = document.getElementById('play-again-final-btn');
+
+        const gameImageEl = document.getElementById('game-image');
+        const optionsAreaEl = document.getElementById('options-area');
+        const currentRoundDisplayEl = document.getElementById('current-round-display');
+        const currentScoreDisplayEl = document.getElementById('current-score-display');
+        const finalScoreDisplayEl = document.getElementById('final-score-display');
+        const playerNicknameEl = document.getElementById('player-nickname'); 
+        const rankIconDisplayEl = document.getElementById('rank-icon-display'); 
+        const feedbackAreaEl = document.getElementById('feedback-area');
+
+        const loadingModal = document.getElementById('loading-modal');
+        const loadingMessageEl = document.getElementById('loading-message');
+        const messageModal = document.getElementById('message-modal');
+        const messageTextEl = document.getElementById('message-text');
+        const messageOkBtn = document.getElementById('message-ok-btn');
+        const confettiContainer = document.getElementById('confetti-container');
+        const starsBackground = document.getElementById('stars-background');
+ 
+        const gameItems = [
+            { id: 'item1', imageSrc: 'https://cdn.britannica.com/41/10941-050-817C0823/flowers-Hop-vine-brewing.jpg', name: 'hop' },
+            { id: 'item2', imageSrc: 'https://placehold.co/550x440/4682B4/FFFFFF?text=Sky', name: 'Sky' },
+            { id: 'item3', imageSrc: 'https://placehold.co/550x440/32CD32/FFFFFF?text=Grass', name: 'Grass' },
+            { id: 'item4', imageSrc: 'https://placehold.co/550x440/FFD700/000000?text=Sun', name: 'Sun' },
+            { id: 'item5', imageSrc: 'https://placehold.co/550x440/8A2BE2/FFFFFF?text=Grape', name: 'Grape' },
+            { id: 'item6', imageSrc: 'https://placehold.co/550x440/D2691E/FFFFFF?text=Wood', name: 'Wood' },
+            { id: 'item7', imageSrc: 'https://placehold.co/550x440/6495ED/FFFFFF?text=Ocean', name: 'Ocean' },
+            { id: 'item8', imageSrc: 'https://placehold.co/550x440/DC143C/FFFFFF?text=Heart', name: 'Heart' },
+            { id: 'item9', imageSrc: 'https://placehold.co/550x440/C0C0C0/000000?text=Moon', name: 'Moon' }
+        ];
+
+        let currentRound = 0;
+        let score = 0;
+        let shuffledGameItems = [];
+        const allItemNames = gameItems.map(item => item.name);
+        let usedCorrectNames = []; 
+
+        // --- Animated Background ---
+        function createStars(numStars) {
+            starsBackground.innerHTML = ''; 
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                const size = Math.random() * 3 + 2; 
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.top = `${Math.random() * 100}vh`; 
+                star.style.left = `${Math.random() * 100}vw`; 
+                star.style.animationDelay = `${Math.random() * 15}s`; 
+                star.style.setProperty('--random-x', Math.random()); 
+                starsBackground.appendChild(star);
+            }
+        }
+
+
+        // --- Sound Effects ---
+        let correctSynth, incorrectSynth, themeSynth, themeTune;
+        let isThemePlaying = false;
+
+        function setupSounds() {
+            if (typeof Tone === 'undefined') return; 
+            if (Tone.context.state !== 'running') {
+                // Tone.start() is called on first user gesture (startGameBtn click)
+            }
+            
+            correctSynth = new Tone.PolySynth(Tone.Synth, {
+                oscillator: { type: "triangle8" },
+                envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.5 },
+                volume: -10
+            }).toDestination();
+
+            incorrectSynth = new Tone.NoiseSynth({
+                noise: { type: "pink" },
+                envelope: { attack: 0.005, decay: 0.2, sustain: 0, release: 0.1 },
+                volume: -15
+            }).toDestination();
+
+            themeSynth = new Tone.Synth({
+                oscillator: { type: "pulse", width: 0.4 },
+                envelope: { attack: 0.01, decay: 0.1, sustain: 0.2, release: 0.3 },
+                volume: -18 
+            }).toDestination();
+            
+            const melody = [
+                { time: "0:0", note: "C4", duration: "8n" },
+                { time: "0:1", note: "E4", duration: "8n" },
+                { time: "0:2", note: "G4", duration: "8n" },
+                { time: "0:3", note: "C5", duration: "8n" },
+                { time: "1:0", note: "G4", duration: "8n" },
+                { time: "1:1", note: "E4", duration: "8n" },
+                { time: "1:2", note: "C4", duration: "4n" },
+            ];
+
+            themeTune = new Tone.Sequence((time, noteEvent) => {
+                themeSynth.triggerAttackRelease(noteEvent.note, noteEvent.duration, time);
+            }, melody, "2m"); 
+            themeTune.loop = true;
+            Tone.Transport.bpm.value = 120;
+        }
+        
+        function playCorrectSound() {
+            if (correctSynth && Tone.context.state === 'running') {
+                correctSynth.triggerAttackRelease(["C4", "E4", "G4"], "8n", Tone.now());
+                correctSynth.triggerAttackRelease(["E4", "G4", "C5"], "8n", Tone.now() + 0.2);
+            }
+        }
+
+        function playIncorrectSound() {
+            if (incorrectSynth && Tone.context.state === 'running') {
+                incorrectSynth.triggerAttackRelease("16n", Tone.now());
+                 setTimeout(() => incorrectSynth.triggerAttackRelease("16n", Tone.now()), 100);
+            }
+        }
+
+        function startThemeMusic() {
+            if (typeof Tone === 'undefined' || !themeTune || isThemePlaying) return;
+            if (Tone.context.state !== 'running') {
+                Tone.start().then(() => { 
+                    if (!isThemePlaying) { 
+                        Tone.Transport.start();
+                        themeTune.start(0);
+                        isThemePlaying = true;
+                        console.log("Theme music started after context init.");
+                    }
+                });
+            } else {
+                Tone.Transport.start();
+                themeTune.start(0);
+                isThemePlaying = true;
+                console.log("Theme music started.");
+            }
+        }
+
+        function stopThemeMusic() {
+            if (typeof Tone === 'undefined' || !themeTune || !isThemePlaying) return;
+            themeTune.stop();
+            Tone.Transport.stop(); 
+            isThemePlaying = false;
+            console.log("Theme music stopped.");
+        }
+
+
+        // --- Confetti Function ---
+        function triggerConfetti() {
+            const colors = ['#fc5185', '#3fc1c9', '#f7b733', '#4CAF50', '#e0e0e0'];
+            const numParticles = 50; 
+            for (let i = 0; i < numParticles; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('confetti-particle');
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = Math.random() * 100 + 'vw'; 
+                particle.style.top = -20 + 'px'; 
+                const size = Math.random() * 8 + 5; 
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                const animDuration = Math.random() * 2 + 2; 
+                particle.style.animation = `confetti-fall ${animDuration}s linear forwards`;
+                particle.style.animationDelay = Math.random() * 0.5 + 's'; 
+                confettiContainer.appendChild(particle);
+                setTimeout(() => {
+                    particle.remove();
+                }, (animDuration + 0.5) * 1000 + 500); 
+            }
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function showLoading(message = "Loading...") {
+            loadingMessageEl.textContent = message;
+            loadingModal.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            loadingModal.classList.add('hidden');
+        }
+        
+        function showMessage(message) {
+            messageTextEl.textContent = message;
+            messageModal.classList.remove('hidden');
+        }
+
+        messageOkBtn.addEventListener('click', () => {
+            messageModal.classList.add('hidden');
+        });
+
+        async function initFirebase() { 
+            showLoading("Initializing...");
+            try {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                    console.log("Signed in with custom token.");
+                } else {
+                    await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
+                }
+            } catch (error) {
+                console.error("Firebase Authentication Error: ", error);
+                showMessage("Error initializing. Please try again later.");
+            } 
+        }
+        
+        onAuthStateChanged(auth, (user) => { 
+            if (user) {
+                userId = user.uid;
+                isAuthReady = true;
+                console.log("Auth state ready. User ID:", userId);
+                startScreen.classList.remove('hidden');
+                if (typeof Tone !== 'undefined') { 
+                    setupSounds(); 
+                    startThemeMusic(); 
+                }
+            } else {
+                userId = null;
+                isAuthReady = false;
+                console.log("User is signed out or auth not ready.");
+                startScreen.classList.remove('hidden'); 
+            }
+            hideLoading();
+        });
+
+
+        function startGame() {
+            if (!isAuthReady) {
+                showMessage("Please wait for initialization to complete.");
+                return;
+            }
+            
+            stopThemeMusic(); 
+
+             if (typeof Tone !== 'undefined') {
+                if (Tone.context.state !== 'running') {
+                     Tone.start().then(() => { 
+                        if (!correctSynth) setupSounds(); 
+                     });
+                } else if (!correctSynth) { 
+                    setupSounds();
+                }
+            }
+
+
+            currentRound = 0;
+            score = 0;
+            usedCorrectNames = [];
+            shuffledGameItems = shuffleArray(gameItems); 
+
+            updateScoreDisplay();
+            updateRoundDisplay();
+
+            startScreen.classList.add('hidden');
+            finalScoreScreen.classList.add('hidden');
+            gameScreen.classList.remove('hidden');
+            
+            displayRound();
+        }
+
+        function displayRound() {
+            feedbackAreaEl.textContent = '';
+            if (currentRound >= 9) {
+                showFinalScore();
+                return;
+            }
+
+            const currentItem = shuffledGameItems[currentRound];
+            gameImageEl.src = currentItem.imageSrc;
+            gameImageEl.alt = `Image of ${currentItem.name}`; 
+
+            optionsAreaEl.innerHTML = ''; 
+            const displayOptions = shuffleArray(allItemNames); 
+
+            displayOptions.forEach(name => {
+                const button = document.createElement('button');
+                button.textContent = name;
+                button.classList.add('retro-btn', 'option-btn');
+                
+                if (usedCorrectNames.includes(name)) {
+                    button.classList.add('greyed-out');
+                    button.disabled = true;
+                } else {
+                    button.addEventListener('click', () => handleOptionClick(name, currentItem.name, button));
+                }
+                optionsAreaEl.appendChild(button);
+            });
+            updateRoundDisplay();
+        }
+
+        function handleOptionClick(selectedName, correctName, buttonEl) {
+            const optionButtons = Array.from(optionsAreaEl.querySelectorAll('.option-btn'));
+            optionButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedName === correctName) {
+                playCorrectSound();
+                score += 10;
+                usedCorrectNames.push(correctName); 
+                buttonEl.classList.add('correct');
+                feedbackAreaEl.textContent = "Correct!";
+                feedbackAreaEl.style.color = "#4CAF50";
+                triggerConfetti(); 
+                
+                currentRound++;
+                updateScoreDisplay();
+
+                setTimeout(() => {
+                    proceedToNextStep();
+                }, 1500); 
+
+            } else { 
+                playIncorrectSound();
+                buttonEl.classList.add('incorrect');
+                feedbackAreaEl.textContent = "Incorrect!"; 
+                feedbackAreaEl.style.color = "#F44336";
+                
+                const correctButton = optionButtons.find(btn => btn.textContent === correctName);
+
+                if (correctButton) {
+                    correctButton.classList.add('flash-correct');
+                    setTimeout(() => {
+                        correctButton.classList.remove('flash-correct');
+                        if (!usedCorrectNames.includes(correctName)) {
+                             usedCorrectNames.push(correctName);
+                        }
+                        currentRound++; 
+                        proceedToNextStep();
+                    }, 1500); 
+                } else {
+                    currentRound++;
+                    proceedToNextStep(); 
+                }
+            }
+        }
+
+        function proceedToNextStep() {
+            if (currentRound < 9) {
+                displayRound();
+            } else {
+                showFinalScore();
+            }
+        }
+
+        function updateScoreDisplay() {
+            currentScoreDisplayEl.textContent = score;
+        }
+
+        function updateRoundDisplay() {
+            currentRoundDisplayEl.textContent = Math.min(currentRound + 1, 9);
+        }
+        
+        function getPlayerRank(currentScore) {
+            const ranks = [
+                { score: 0, name: "Flat Wort", svgIcon: `<svg viewBox="0 0 100 100"><rect x="20" y="50" width="60" height="30" fill="#a0522d" stroke="#70381f" stroke-width="2"/><rect x="25" y="20" width="50" height="30" fill="#d2b48c" stroke="#a0522d" stroke-width="2"/><text x="50" y="40" font-family="'Press Start 2P', cursive" font-size="10" fill="#70381f" text-anchor="middle">WORT</text><path d="M30 50 Q 25 45 20 50 T 10 50" stroke="#8b4513" stroke-width="2" fill="none" opacity="0.5"/><path d="M70 50 Q 75 45 80 50 T 90 50" stroke="#8b4513" stroke-width="2" fill="none" opacity="0.5"/></svg>` },
+                { score: 10, name: "Soapy Suds", svgIcon: `<svg viewBox="0 0 100 100"><defs><radialGradient id="bubbleGradient" cx="0.35" cy="0.35" r="0.65"><stop offset="0%" stop-color="rgba(200,220,255,0.8)"/><stop offset="100%" stop-color="rgba(135,206,250,0.4)"/></radialGradient></defs><circle cx="30" cy="60" r="15" fill="url(#bubbleGradient)"/><circle cx="50" cy="70" r="20" fill="url(#bubbleGradient)"/><circle cx="70" cy="55" r="18" fill="url(#bubbleGradient)"/><circle cx="40" cy="45" r="12" fill="url(#bubbleGradient)"/><circle cx="60" cy="35" r="10" fill="url(#bubbleGradient)"/><text x="50" y="20" font-family="'Press Start 2P', cursive" font-size="10" fill="#ADD8E6" text-anchor="middle">SOAP</text></svg>` },
+                { score: 30, name: "Pitcher Practice", svgIcon: `<svg viewBox="0 0 100 100"><path d="M20 15 C 10 25, 10 75, 20 85 L 70 85 C 80 75, 80 25, 70 15 Z" fill="#B0C4DE" stroke="#4682B4" stroke-width="3"/><path d="M70 30 C 85 35, 85 65, 70 70" fill="none" stroke="#4682B4" stroke-width="3"/><rect x="40" y="10" width="20" height="5" fill="#A9A9A9" stroke="#4682B4" stroke-width="1.5"/><line x1="45" y1="30" x2="55" y2="40" stroke="#FFFFE0" stroke-width="3" stroke-linecap="round"/><line x1="45" y1="40" x2="55" y2="50" stroke="#FFFFE0" stroke-width="3" stroke-linecap="round"/></svg>` },
+                { score: 50, name: "Hop Head in Training", svgIcon: `<svg viewBox="0 0 100 100"><g transform="scale(0.8) translate(12 5)"><path d="M50 115 L50 100" stroke="#7a5547" stroke-width="5" /><ellipse cx="50" cy="85" rx="22" ry="30" fill="#6B8E23"/><ellipse cx="38" cy="73" rx="20" ry="27" fill="#6B8E23" transform="rotate(-20 38 73)"/><ellipse cx="62" cy="73" rx="20" ry="27" fill="#6B8E23" transform="rotate(20 62 73)"/><ellipse cx="50" cy="60" rx="18" ry="24" fill="#7FBC8F"/><ellipse cx="40" cy="50" rx="16" ry="21" fill="#7FBC8F" transform="rotate(-25 40 50)"/><ellipse cx="60" cy="50" rx="16" ry="21" fill="#7FBC8F" transform="rotate(25 60 50)"/><ellipse cx="50" cy="38" rx="13" ry="17" fill="#98FB98"/><ellipse cx="50" cy="25" rx="9" ry="12" fill="#98FB98"/></g></svg>` },
+                { score: 70, name: "Crafty Brewmaster", svgIcon: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="40" ry="30" fill="#8B4513" stroke="#5A2D0C" stroke-width="3"/><rect x="10" y="35" width="80" height="10" fill="#A0522D" stroke="#5A2D0C" stroke-width="1.5"/><rect x="10" y="55" width="80" height="10" fill="#A0522D" stroke="#5A2D0C" stroke-width="1.5"/><rect x="75" y="45" width="15" height="10" rx="2" fill="#CD853F" stroke="#5A2D0C" stroke-width="1.5"/><circle cx="50" cy="15" r="5" fill="#F0E68C"/><path d="M45 20 Q 50 25 55 20" stroke="#F0E68C" stroke-width="2" fill="none"/></svg>` },
+                { score: 90, name: "Lord of the Hops!", svgIcon: `<svg viewBox="0 0 100 100"><path d="M10 30 L 20 70 L 50 20 L 80 70 L 90 30 L 50 90 Z" fill="#FFD700" stroke="#B8860B" stroke-width="3"/><circle cx="25" cy="28" r="6" fill="#ADFF2F"/><circle cx="50" cy="15" r="7" fill="#FF6347"/><circle cx="75" cy="28" r="6" fill="#ADFF2F"/><g transform="scale(0.2) translate(20 10)"><path d="M50 115 L50 100" stroke="#006400" stroke-width="12" /><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/></g><g transform="scale(0.2) translate(150 10)"><path d="M50 115 L50 100" stroke="#006400" stroke-width="12" /><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/></g><g transform="scale(0.2) translate(280 10)"><path d="M50 115 L50 100" stroke="#006400" stroke-width="12" /><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/></g></svg>` }
+            ];
+
+            let selectedRank = ranks[0]; 
+            for (let i = ranks.length - 1; i >= 0; i--) {
+                if (currentScore >= ranks[i].score) {
+                    selectedRank = ranks[i];
+                    break;
+                }
+            }
+            return selectedRank;
+        }
+
+        async function showFinalScore() { 
+            gameScreen.classList.add('hidden');
+            finalScoreDisplayEl.textContent = score;
+            const rank = getPlayerRank(score);
+            playerNicknameEl.textContent = `Your Rank: ${rank.name}`; 
+            rankIconDisplayEl.innerHTML = rank.svgIcon; 
+            finalScoreScreen.classList.remove('hidden');
+        }
+        
+        function showStartScreenAgain() { 
+            gameScreen.classList.add('hidden');
+            finalScoreScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+            if (typeof Tone !== 'undefined') { 
+                 if (!isThemePlaying) startThemeMusic();
+            }
+        }
+
+
+        startGameBtn.addEventListener('click', startGame);
+        playAgainFinalBtn.addEventListener('click', () => {
+            finalScoreScreen.classList.add('hidden');
+            showStartScreenAgain(); 
+        });
+
+
+        // Initial setup
+        createStars(100); 
+        initFirebase(); 
+
+    </script>
+</body>
+</html>
