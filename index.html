@@ -505,6 +505,8 @@
             }).toDestination();
             
             const melody = [
+  // === Part 1 (Bars 0-3) ===
+  // Bar 0: Ascending C major arpeggio and return
   { time: "0:0:0", note: "C4", duration: "8n" },
   { time: "0:0:2", note: "E4", duration: "8n" },
   { time: "0:1:0", note: "G4", duration: "8n" },
@@ -534,13 +536,51 @@
   { time: "2:3:0", note: "E4", duration: "8n" },
   // Eighth rest at 2:3:2
 
-  // Bar 3: Resolving phrase
+  // Bar 3: Mid-phrase resolving cadence
   { time: "3:0:0", note: "F4", duration: "8n" },
   { time: "3:0:2", note: "E4", duration: "8n" },
   { time: "3:1:0", note: "D4", duration: "8n" },
   { time: "3:1:2", note: "C4", duration: "8n" },
   { time: "3:2:0", note: "G4", duration: "4n" },
-  { time: "3:3:0", note: "C4", duration: "4n" } 
+  { time: "3:3:0", note: "C4", duration: "4n" },
+
+  // === Part 2 (Bars 4-7) ===
+  // Bar 4: Return to C major arpeggio (similar to Bar 0)
+  { time: "4:0:0", note: "C4", duration: "8n" },
+  { time: "4:0:2", note: "E4", duration: "8n" },
+  { time: "4:1:0", note: "G4", duration: "8n" },
+  { time: "4:1:2", note: "C5", duration: "8n" },
+  { time: "4:2:0", note: "G4", duration: "8n" },
+  { time: "4:2:2", note: "E4", duration: "8n" },
+  { time: "4:3:0", note: "C4", duration: "8n" },
+  // Eighth rest at 4:3:2
+
+  // Bar 5: Ascending F major arpeggio and return
+  { time: "5:0:0", note: "F4", duration: "8n" },
+  { time: "5:0:2", note: "A4", duration: "8n" },
+  { time: "5:1:0", note: "C5", duration: "8n" },
+  { time: "5:1:2", note: "F5", duration: "8n" },
+  { time: "5:2:0", note: "C5", duration: "8n" },
+  { time: "5:2:2", note: "A4", duration: "8n" },
+  { time: "5:3:0", note: "F4", duration: "8n" },
+  // Eighth rest at 5:3:2
+
+  // Bar 6: Ascending G major arpeggio and return
+  { time: "6:0:0", note: "G4", duration: "8n" },
+  { time: "6:0:2", note: "B4", duration: "8n" },
+  { time: "6:1:0", note: "D5", duration: "8n" },
+  { time: "6:1:2", note: "G5", duration: "8n" },
+  { time: "6:2:0", note: "D5", duration: "8n" },
+  { time: "6:2:2", note: "B4", duration: "8n" },
+  { time: "6:3:0", note: "G4", duration: "8n" },
+  // Eighth rest at 6:3:2
+
+  // Bar 7: Final cadence to C major to complete the loop
+  { time: "7:0:0", note: "G4", duration: "8n" },
+  { time: "7:0:2", note: "F4", duration: "8n" },
+  { time: "7:1:0", note: "E4", duration: "8n" },
+  { time: "7:1:2", note: "D4", duration: "8n" },
+  { time: "7:2:0", note: "C4", duration: "2n" }
             ];
 
             themeTune = new Tone.Sequence((time, noteEvent) => {
