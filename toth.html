@@ -10,35 +10,34 @@
     <style>
         body {
             font-family: 'Press Start 2P', cursive;
-            background-color: #121222; /* Slightly darker base for stars to show */
-            color: #e0e0e0; /* Light grey */
+            background-color: #121222; 
+            color: #e0e0e0; 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 1rem;
-            overflow: hidden; /* Prevent scrollbars from stars/confetti */
+            overflow: hidden; 
             position: relative; 
         }
 
-        /* Animated Background Styles */
         .stars-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Behind all content */
-            overflow: hidden; /* Ensure stars don't cause scrollbars */
-            background: #121222; /* Match body or slightly different for effect */
+            z-index: 0; 
+            overflow: hidden; 
+            background: #121222; 
         }
 
         .star {
             position: absolute;
-            background-color: rgba(224, 224, 224, 0.8); /* Increased opacity */
+            background-color: rgba(224, 224, 224, 0.8); 
             border-radius: 50%;
-            animation: moveStar 15s linear infinite; /* Shortened duration for faster perceived speed */
-            box-shadow: 0 0 6px rgba(224, 224, 224, 0.4), 0 0 12px rgba(224, 224, 224, 0.3); /* Enhanced glow */
+            animation: moveStar 15s linear infinite; 
+            box-shadow: 0 0 6px rgba(224, 224, 224, 0.4), 0 0 12px rgba(224, 224, 224, 0.3); 
         }
 
         @keyframes moveStar {
@@ -46,19 +45,19 @@
                 transform: translateY(0vh) translateX(0vw) scale(1);
                 opacity: 0;
             }
-            10%, 90% { /* Stars visible for most of the animation */
-                opacity: 0.9; /* Slightly more opaque during visible phase */
+            10%, 90% { 
+                opacity: 0.9; 
             }
             100% {
-                transform: translateY(100vh) translateX(calc(var(--random-x) * 30vw - 15vw)) scale(0.6); /* Increased horizontal movement range, slightly larger end scale */
+                transform: translateY(100vh) translateX(calc(var(--random-x) * 30vw - 15vw)) scale(0.6); 
                 opacity: 0;
             }
         }
 
 
         .container {
-            background-color: #162447; /* Darker blue */
-            border: 4px solid #f7b733; /* Yellow-orange border */
+            background-color: #162447; 
+            border: 4px solid #f7b733; 
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 0 20px #f7b733aa;
@@ -69,14 +68,14 @@
             z-index: 1; 
         }
         .retro-title {
-            color: #fc5185; /* Pink */
-            text-shadow: 2px 2px #3fc1c9; /* Cyan shadow */
+            color: #fc5185; 
+            text-shadow: 2px 2px #3fc1c9; 
             margin-bottom: 1rem; 
             font-size: 1.8rem; 
             line-height: 1.2;
         }
         .retro-btn {
-            background-color: #3fc1c9; /* Cyan */
+            background-color: #3fc1c9; 
             color: #1a1a2e;
             padding: 0.75rem 1.5rem;
             border: 2px solid #f7b733;
@@ -139,18 +138,6 @@
             border-radius: 5px;
             margin: 1rem auto;
             background-color: #333; 
-        }
-        input[type="text"] { 
-            background-color: #e0e0e0;
-            color: #1a1a2e;
-            border: 2px solid #fc5185;
-            padding: 0.5rem;
-            border-radius: 5px;
-            text-align: center;
-            font-family: 'Press Start 2P', cursive;
-            text-transform: uppercase;
-            margin: 0.5rem auto 1rem auto; 
-            display: block; 
         }
         .feedback-message {
             min-height: 24px; 
@@ -232,13 +219,59 @@
             min-height: 1.5rem; 
         }
         #rank-icon-display {
-            width: 80px; /* Increased size */
-            height: 80px; /* Increased size */
+            width: 80px; 
+            height: 80px; 
             margin: 0.5rem auto 1.5rem auto; 
         }
         #rank-icon-display svg {
             width: 100%;
             height: 100%;
+        }
+        
+        /* Volume Slider Styles */
+        .volume-control-container {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .volume-control-container label {
+            font-size: 0.8rem;
+            color: #f7b733;
+        }
+        #theme-volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 150px;
+            height: 8px;
+            background: #3fc1c9; /* Cyan track */
+            outline: none;
+            opacity: 0.7;
+            transition: opacity .2s;
+            border-radius: 4px;
+            border: 1px solid #f7b733;
+        }
+        #theme-volume-slider:hover {
+            opacity: 1;
+        }
+        #theme-volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #fc5185; /* Pink thumb */
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid #f7b733;
+        }
+        #theme-volume-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #fc5185;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid #f7b733;
         }
 
 
@@ -278,7 +311,7 @@
                 font-size: 1rem;
             }
             #rank-icon-display {
-                width: 70px; /* Adjusted for medium screens */
+                width: 70px; 
                 height: 70px;
             }
         }
@@ -301,8 +334,11 @@
                 height: 90px; 
             }
             #rank-icon-display {
-                width: 60px; /* Adjusted for small screens */
+                width: 60px; 
                 height: 60px;
+            }
+            #theme-volume-slider {
+                width: 120px;
             }
         }
     </style>
@@ -340,6 +376,10 @@
             </svg>
             <p class="mb-4 text-lg">Match the image to its name!</p>
             <button id="start-game-btn" class="retro-btn start-screen-btn">Start Game</button>
+            <div class="volume-control-container">
+                <label for="theme-volume-slider">Theme Volume</label>
+                <input type="range" id="theme-volume-slider" min="-40" max="0" value="-18" step="1">
+            </div>
             </div>
 
         <div id="game-screen" class="hidden">
@@ -379,31 +419,6 @@
     </div>
 
     <script type="module">
-        // Firebase Imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
-
-        // Firebase Config
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "YOUR_API_KEY", 
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-topofthehops-app';
-
-        // Initialize Firebase App and Auth
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        setLogLevel('debug'); 
-
-        let userId = null; 
-        let isAuthReady = false;
-
         // DOM Elements
         const startScreen = document.getElementById('start-screen');
         const gameScreen = document.getElementById('game-screen');
@@ -411,6 +426,7 @@
         
         const startGameBtn = document.getElementById('start-game-btn');
         const playAgainFinalBtn = document.getElementById('play-again-final-btn');
+        const themeVolumeSlider = document.getElementById('theme-volume-slider');
 
         const gameImageEl = document.getElementById('game-image');
         const optionsAreaEl = document.getElementById('options-area');
@@ -468,46 +484,44 @@
         // --- Sound Effects ---
         let correctSynth, incorrectSynth, themeSynth, themeTune;
         let isThemePlaying = false;
+        const initialThemeVolume = -18; // Default theme volume in dB
 
         function setupSounds() {
             if (typeof Tone === 'undefined') return; 
-            if (Tone.context.state !== 'running') {
-                // Tone.start() is called on first user gesture (startGameBtn click)
-            }
             
             correctSynth = new Tone.PolySynth(Tone.Synth, {
                 oscillator: { type: "triangle8" },
                 envelope: { attack: 0.005, decay: 0.1, sustain: 0.3, release: 0.5 },
-                volume: -10
+                volume: -10 // Game effect volume
             }).toDestination();
 
             incorrectSynth = new Tone.NoiseSynth({
                 noise: { type: "pink" },
                 envelope: { attack: 0.005, decay: 0.2, sustain: 0, release: 0.1 },
-                volume: -15
+                volume: -15 // Game effect volume
             }).toDestination();
 
             themeSynth = new Tone.Synth({
                 oscillator: { type: "pulse", width: 0.4 },
                 envelope: { attack: 0.01, decay: 0.1, sustain: 0.2, release: 0.3 },
-                volume: -18 
+                volume: initialThemeVolume 
             }).toDestination();
             
             const melody = [
-                { time: "0:0", note: "C4", duration: "8n" },
-                { time: "0:1", note: "E4", duration: "8n" },
-                { time: "0:2", note: "G4", duration: "8n" },
-                { time: "0:3", note: "C5", duration: "8n" },
-                { time: "1:0", note: "G4", duration: "8n" },
-                { time: "1:1", note: "E4", duration: "8n" },
-                { time: "1:2", note: "C4", duration: "4n" },
+                { time: "0:0:0", note: "C4", duration: "8n" },
+                { time: "0:0:2", note: "E4", duration: "8n" }, // Adjusted timing for faster BPM
+                { time: "0:1:0", note: "G4", duration: "8n" },
+                { time: "0:1:2", note: "C5", duration: "8n" },
+                { time: "0:2:0", note: "G4", duration: "8n" },
+                { time: "0:2:2", note: "E4", duration: "8n" },
+                { time: "0:3:0", note: "C4", duration: "4n" },
             ];
 
             themeTune = new Tone.Sequence((time, noteEvent) => {
                 themeSynth.triggerAttackRelease(noteEvent.note, noteEvent.duration, time);
-            }, melody, "2m"); 
+            }, melody, "1m"); // Loop every 1 measure at faster BPM
             themeTune.loop = true;
-            Tone.Transport.bpm.value = 120;
+            Tone.Transport.bpm.value = 160; // Increased BPM
         }
         
         function playCorrectSound() {
@@ -546,10 +560,20 @@
         function stopThemeMusic() {
             if (typeof Tone === 'undefined' || !themeTune || !isThemePlaying) return;
             themeTune.stop();
-            Tone.Transport.stop(); 
+            // Don't stop Tone.Transport globally here if game sounds might still need it
+            // themeTune.stop() is enough to stop this specific sequence.
+            // If game sounds also use Transport, then stop it when game ends or pauses.
             isThemePlaying = false;
             console.log("Theme music stopped.");
         }
+        
+        themeVolumeSlider.addEventListener('input', (event) => {
+            if (themeSynth) {
+                const volumeValue = parseFloat(event.target.value);
+                themeSynth.volume.value = volumeValue;
+                console.log("Theme volume set to:", volumeValue);
+            }
+        });
 
 
         // --- Confetti Function ---
@@ -602,60 +626,37 @@
             messageModal.classList.add('hidden');
         });
 
-        async function initFirebase() { 
-            showLoading("Initializing...");
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                    console.log("Signed in with custom token.");
-                } else {
-                    await signInAnonymously(auth);
-                    console.log("Signed in anonymously.");
-                }
-            } catch (error) {
-                console.error("Firebase Authentication Error: ", error);
-                showMessage("Error initializing. Please try again later.");
-            } 
+        function showInitialScreen() {
+            createStars(100); 
+            setupSounds(); 
+            themeVolumeSlider.value = initialThemeVolume; // Set slider to initial volume
+            if (themeSynth) themeSynth.volume.value = initialThemeVolume; // Apply to synth
+
+            startScreen.classList.remove('hidden');
+            startThemeMusic(); 
+            hideLoading(); 
         }
         
-        onAuthStateChanged(auth, (user) => { 
-            if (user) {
-                userId = user.uid;
-                isAuthReady = true;
-                console.log("Auth state ready. User ID:", userId);
-                startScreen.classList.remove('hidden');
-                if (typeof Tone !== 'undefined') { 
-                    setupSounds(); 
-                    startThemeMusic(); 
-                }
-            } else {
-                userId = null;
-                isAuthReady = false;
-                console.log("User is signed out or auth not ready.");
-                startScreen.classList.remove('hidden'); 
-            }
-            hideLoading();
-        });
+        showLoading("Preparing Hops..."); 
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', showInitialScreen);
+        } else {
+            showInitialScreen(); 
+        }
 
 
         function startGame() {
-            if (!isAuthReady) {
-                showMessage("Please wait for initialization to complete.");
-                return;
-            }
-            
             stopThemeMusic(); 
 
              if (typeof Tone !== 'undefined') {
                 if (Tone.context.state !== 'running') {
                      Tone.start().then(() => { 
-                        if (!correctSynth) setupSounds(); 
+                        if (!correctSynth) setupSounds(); // Make sure game sounds are ready
                      });
                 } else if (!correctSynth) { 
-                    setupSounds();
+                    setupSounds(); // Game sounds might not be set up if theme was playing
                 }
             }
-
 
             currentRound = 0;
             score = 0;
@@ -765,12 +766,12 @@
         
         function getPlayerRank(currentScore) {
             const ranks = [
-                { score: 0, name: "Flat Wort", svgIcon: `<svg viewBox="0 0 100 100"><rect x="20" y="50" width="60" height="30" fill="#a0522d" stroke="#70381f" stroke-width="2"/><rect x="25" y="20" width="50" height="30" fill="#d2b48c" stroke="#a0522d" stroke-width="2"/><text x="50" y="40" font-family="'Press Start 2P', cursive" font-size="10" fill="#70381f" text-anchor="middle">WORT</text><path d="M30 50 Q 25 45 20 50 T 10 50" stroke="#8b4513" stroke-width="2" fill="none" opacity="0.5"/><path d="M70 50 Q 75 45 80 50 T 90 50" stroke="#8b4513" stroke-width="2" fill="none" opacity="0.5"/></svg>` },
-                { score: 10, name: "Soapy Suds", svgIcon: `<svg viewBox="0 0 100 100"><defs><radialGradient id="bubbleGradient" cx="0.35" cy="0.35" r="0.65"><stop offset="0%" stop-color="rgba(200,220,255,0.8)"/><stop offset="100%" stop-color="rgba(135,206,250,0.4)"/></radialGradient></defs><circle cx="30" cy="60" r="15" fill="url(#bubbleGradient)"/><circle cx="50" cy="70" r="20" fill="url(#bubbleGradient)"/><circle cx="70" cy="55" r="18" fill="url(#bubbleGradient)"/><circle cx="40" cy="45" r="12" fill="url(#bubbleGradient)"/><circle cx="60" cy="35" r="10" fill="url(#bubbleGradient)"/><text x="50" y="20" font-family="'Press Start 2P', cursive" font-size="10" fill="#ADD8E6" text-anchor="middle">SOAP</text></svg>` },
-                { score: 30, name: "Pitcher Practice", svgIcon: `<svg viewBox="0 0 100 100"><path d="M20 15 C 10 25, 10 75, 20 85 L 70 85 C 80 75, 80 25, 70 15 Z" fill="#B0C4DE" stroke="#4682B4" stroke-width="3"/><path d="M70 30 C 85 35, 85 65, 70 70" fill="none" stroke="#4682B4" stroke-width="3"/><rect x="40" y="10" width="20" height="5" fill="#A9A9A9" stroke="#4682B4" stroke-width="1.5"/><line x1="45" y1="30" x2="55" y2="40" stroke="#FFFFE0" stroke-width="3" stroke-linecap="round"/><line x1="45" y1="40" x2="55" y2="50" stroke="#FFFFE0" stroke-width="3" stroke-linecap="round"/></svg>` },
-                { score: 50, name: "Hop Head in Training", svgIcon: `<svg viewBox="0 0 100 100"><g transform="scale(0.8) translate(12 5)"><path d="M50 115 L50 100" stroke="#7a5547" stroke-width="5" /><ellipse cx="50" cy="85" rx="22" ry="30" fill="#6B8E23"/><ellipse cx="38" cy="73" rx="20" ry="27" fill="#6B8E23" transform="rotate(-20 38 73)"/><ellipse cx="62" cy="73" rx="20" ry="27" fill="#6B8E23" transform="rotate(20 62 73)"/><ellipse cx="50" cy="60" rx="18" ry="24" fill="#7FBC8F"/><ellipse cx="40" cy="50" rx="16" ry="21" fill="#7FBC8F" transform="rotate(-25 40 50)"/><ellipse cx="60" cy="50" rx="16" ry="21" fill="#7FBC8F" transform="rotate(25 60 50)"/><ellipse cx="50" cy="38" rx="13" ry="17" fill="#98FB98"/><ellipse cx="50" cy="25" rx="9" ry="12" fill="#98FB98"/></g></svg>` },
-                { score: 70, name: "Crafty Brewmaster", svgIcon: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="40" ry="30" fill="#8B4513" stroke="#5A2D0C" stroke-width="3"/><rect x="10" y="35" width="80" height="10" fill="#A0522D" stroke="#5A2D0C" stroke-width="1.5"/><rect x="10" y="55" width="80" height="10" fill="#A0522D" stroke="#5A2D0C" stroke-width="1.5"/><rect x="75" y="45" width="15" height="10" rx="2" fill="#CD853F" stroke="#5A2D0C" stroke-width="1.5"/><circle cx="50" cy="15" r="5" fill="#F0E68C"/><path d="M45 20 Q 50 25 55 20" stroke="#F0E68C" stroke-width="2" fill="none"/></svg>` },
-                { score: 90, name: "Lord of the Hops!", svgIcon: `<svg viewBox="0 0 100 100"><path d="M10 30 L 20 70 L 50 20 L 80 70 L 90 30 L 50 90 Z" fill="#FFD700" stroke="#B8860B" stroke-width="3"/><circle cx="25" cy="28" r="6" fill="#ADFF2F"/><circle cx="50" cy="15" r="7" fill="#FF6347"/><circle cx="75" cy="28" r="6" fill="#ADFF2F"/><g transform="scale(0.2) translate(20 10)"><path d="M50 115 L50 100" stroke="#006400" stroke-width="12" /><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/></g><g transform="scale(0.2) translate(150 10)"><path d="M50 115 L50 100" stroke="#006400" stroke-width="12" /><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/></g><g transform="scale(0.2) translate(280 10)"><path d="M50 115 L50 100" stroke="#006400" stroke-width="12" /><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/></g></svg>` }
+                { score: 0, name: "Flat Wort", svgIcon: `<svg viewBox="0 0 100 100"><path d="M20 80 Q22 70 30 70 L 70 70 Q 78 70 80 80 L 75 85 L 25 85 Z" fill="#654321" stroke="#3E2723" stroke-width="2"/><path d="M25 70 Q 25 40 30 40 L 70 40 Q 75 40 75 70" fill="#A1887F" stroke="#3E2723" stroke-width="2"/><text x="50" y="60" font-family="'Press Start 2P'" font-size="10" fill="#4E342E" text-anchor="middle">WORT?</text></svg>` },
+                { score: 10, name: "Soapy Suds", svgIcon: `<svg viewBox="0 0 100 100"><defs><radialGradient id="rankBubbleGradient" cx="0.35" cy="0.35" r="0.65"><stop offset="0%" stop-color="rgba(220,235,255,0.9)"/><stop offset="100%" stop-color="rgba(170,216,250,0.6)"/></radialGradient></defs><path d="M20 85 L 25 30 Q 50 20 75 30 L 80 85 Z" fill="rgba(100,149,237,0.3)" stroke="#4682B4" stroke-width="2"/><circle cx="35" cy="40" r="12" fill="url(#rankBubbleGradient)"/><circle cx="65" cy="45" r="15" fill="url(#rankBubbleGradient)"/><circle cx="50" cy="25" r="10" fill="url(#rankBubbleGradient)"/><circle cx="25" cy="60" r="8" fill="url(#rankBubbleGradient)"/><circle cx="75" cy="65" r="10" fill="url(#rankBubbleGradient)"/><circle cx="50" cy="75" r="14" fill="url(#rankBubbleGradient)"/></svg>` },
+                { score: 30, name: "Pitcher Practice", svgIcon: `<svg viewBox="0 0 100 100"><path d="M25 10 C 15 20, 15 80, 25 90 L 65 90 C 75 80, 75 20, 65 10 Z" fill="#D3D3D3" stroke="#808080" stroke-width="3"/><path d="M65 25 C 85 30, 85 70, 65 75" fill="none" stroke="#808080" stroke-width="4"/><rect x="40" y="5" width="20" height="5" fill="#A9A9A9" stroke="#808080" stroke-width="1"/><line x1="35" y1="30" x2="55" y2="50" stroke="#FFFFE0" stroke-width="5" stroke-linecap="round" opacity="0.7"/><line x1="35" y1="50" x2="55" y2="70" stroke="#FFFFE0" stroke-width="5" stroke-linecap="round" opacity="0.7"/></svg>` },
+                { score: 50, name: "Hop Head in Training", svgIcon: `<svg viewBox="0 0 100 100"><g transform="scale(0.9) translate(5 0)"><path d="M50 118 L50 100" stroke="#8B4513" stroke-width="6" /><ellipse cx="50" cy="88" rx="25" ry="33" fill="#6B8E23" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="35" cy="75" rx="22" ry="29" fill="#6B8E23" transform="rotate(-20 35 75)" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="65" cy="75" rx="22" ry="29" fill="#6B8E23" transform="rotate(20 65 75)" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="50" cy="62" rx="20" ry="26" fill="#7FBC8F" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="38" cy="50" rx="18" ry="23" fill="#7FBC8F" transform="rotate(-25 38 50)" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="62" cy="50" rx="18" ry="23" fill="#7FBC8F" transform="rotate(25 62 50)" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="50" cy="38" rx="14" ry="18" fill="#98FB98" stroke="#556B2F" stroke-width="1.5"/><ellipse cx="50" cy="25" rx="10" ry="13" fill="#98FB98" stroke="#556B2F" stroke-width="1.5"/></g></svg>` },
+                { score: 70, name: "Crafty Brewmaster", svgIcon: `<svg viewBox="0 0 100 100"><ellipse cx="50" cy="60" rx="45" ry="35" fill="#A0522D" stroke="#5D4037" stroke-width="3"/><rect x="5"  y="40" width="90" height="12" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/><rect x="5"  y="68" width="90" height="12" fill="#8D6E63" stroke="#5D4037" stroke-width="2"/><rect x="70" y="52" width="25" height="16" rx="3" fill="#C19A6B" stroke="#5D4037" stroke-width="2"/><circle cx="50" cy="15" r="6" fill="#FFEB3B" stroke="#AFB42B" stroke-width="1"/><path d="M40 20 Q 50 30 60 20" stroke="#FFEB3B" stroke-width="2.5" fill="none" opacity="0.8"/></svg>` },
+                { score: 90, name: "Lord of the Hops!", svgIcon: `<svg viewBox="0 0 100 100"><path d="M10 35 Q 15 20 25 30 L 20 70 L 50 35 L 80 70 L 75 30 Q 85 20 90 35 L 50 95 Z" fill="#FFD700" stroke="#B8860B" stroke-width="3"/><circle cx="15" cy="30" r="7" fill="#ADFF2F" stroke="#556B2F" stroke-width="1"/><circle cx="50" cy="25" r="8" fill="#FF4500" stroke="#8B0000" stroke-width="1"/><circle cx="85" cy="30" r="7" fill="#ADFF2F" stroke="#556B2F" stroke-width="1"/><g transform="scale(0.18) translate(30 5)"><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/><ellipse cx="50" cy="65" rx="16" ry="22" fill="#32CD32"/><ellipse cx="50" cy="48" rx="13" ry="18" fill="#32CD32"/></g><g transform="scale(0.18) translate(120 5)"><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/><ellipse cx="50" cy="65" rx="16" ry="22" fill="#32CD32"/><ellipse cx="50" cy="48" rx="13" ry="18" fill="#32CD32"/></g><g transform="scale(0.18) translate(210 5)"><ellipse cx="50" cy="85" rx="20" ry="28" fill="#32CD32"/><ellipse cx="40" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(-15 40 75)"/><ellipse cx="60" cy="75" rx="18" ry="25" fill="#32CD32" transform="rotate(15 60 75)"/><ellipse cx="50" cy="65" rx="16" ry="22" fill="#32CD32"/><ellipse cx="50" cy="48" rx="13" ry="18" fill="#32CD32"/></g></svg>` }
             ];
 
             let selectedRank = ranks[0]; 
@@ -810,8 +811,25 @@
 
 
         // Initial setup
-        createStars(100); 
-        initFirebase(); 
+        
+        function initializeApp() {
+            createStars(100); 
+            setupSounds(); 
+            themeVolumeSlider.value = initialThemeVolume;
+            if(themeSynth) themeSynth.volume.value = initialThemeVolume;
+
+            startScreen.classList.remove('hidden');
+            startThemeMusic(); 
+            hideLoading(); 
+        }
+        
+        showLoading("Preparing Hops..."); 
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp(); 
+        }
+        
 
     </script>
 </body>
