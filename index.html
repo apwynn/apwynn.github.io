@@ -448,7 +448,7 @@
             { id: 'item6', imageSrc: 'https://apwynn.github.io/Centennial.jpg', name: 'Centennial' },
             { id: 'item7', imageSrc: 'https://apwynn.github.io/Simcoe.jpg', name: 'Simcoe' },
             { id: 'item8', imageSrc: 'https://apwynn.github.io/Saaz.jpg', name: 'Saaz' },
-            { id: 'item9', imageSrc: 'https://apwynn.github.io/galxay.jpg', name: 'Galxay' } 
+            { id: 'item9', imageSrc: 'https://apwynn.github.io/galaxy.jpg', name: 'Galxay' } 
         ];
 
 
@@ -537,7 +537,7 @@
                 themeSynth.triggerAttackRelease(noteEvent.note, noteEvent.duration, time);
             }, melody, "4m"); 
             themeTune.loop = true;
-            Tone.Transport.bpm.value = 109; 
+            Tone.Transport.bpm.value = 280; // Increased BPM
         }
         
         function playCorrectSound() {
