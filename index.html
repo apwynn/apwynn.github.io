@@ -66,6 +66,11 @@
             text-align: center;
             position: relative; 
             z-index: 1; 
+            display: flex; /* Added for flex column layout */
+            flex-direction: column; /* Added for flex column layout */
+        }
+        .screen-content { /* Wrapper for screen-specific content */
+            flex-grow: 1; /* Allows content to take available space */
         }
         .retro-title {
             color: #fc5185; 
@@ -228,13 +233,16 @@
             height: 100%;
         }
         
-        /* Volume Slider Styles */
+        /* Volume Slider Styles - now globally positioned */
         .volume-control-container {
-            margin-top: 2rem;
+            /* margin-top: 2rem; Removed fixed top margin */
+            padding-top: 1rem; /* Add some padding from content above */
+            padding-bottom: 1rem; /* Add padding at the bottom of the container */
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0.5rem;
+            width: 100%; /* Ensure it takes width for centering */
         }
         .volume-control-container label {
             font-size: 0.8rem;
@@ -347,61 +355,62 @@
     <div class="stars-bg" id="stars-background"></div> 
 
     <div id="app-container" class="container">
-        <div id="start-screen">
-            <h1 class="retro-title">Top of the Hops</h1>
-            <svg id="start-screen-graphic" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="hopGradientGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#5cb85c;stop-opacity:1" /> 
-                        <stop offset="100%" style="stop-color:#3d8b3d;stop-opacity:1" /> 
-                    </linearGradient>
-                     <filter id="थोड़ा_धुंधलापन">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="0.7"/>
-                    </filter>
-                </defs>
-                <path d="M50 115 L50 100" stroke="#7a5547" stroke-width="4" />
-                <ellipse cx="50" cy="85" rx="20" ry="28" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="40" cy="75" rx="18" ry="25" fill="url(#hopGradientGreen)" transform="rotate(-15 40 75)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="60" cy="75" rx="18" ry="25" fill="url(#hopGradientGreen)" transform="rotate(15 60 75)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="50" cy="65" rx="16" ry="22" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="42" cy="58" rx="15" ry="20" fill="url(#hopGradientGreen)" transform="rotate(-20 42 58)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="58" cy="58" rx="15" ry="20" fill="url(#hopGradientGreen)" transform="rotate(20 58 58)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="50" cy="48" rx="13" ry="18" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="45" cy="42" rx="12" ry="16" fill="url(#hopGradientGreen)" transform="rotate(-25 45 42)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="55" cy="42" rx="12" ry="16" fill="url(#hopGradientGreen)" transform="rotate(25 55 42)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <ellipse cx="50" cy="35" rx="10" ry="14" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
-                 <ellipse cx="50" cy="25" rx="7" ry="10" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
-                <path d="M30 90 Q 35 70 50 80" fill="none" stroke="#4cae4c" stroke-width="3"/>
-                <path d="M70 90 Q 65 70 50 80" fill="none" stroke="#4cae4c" stroke-width="3"/>
-            </svg>
-            <p class="mb-4 text-lg">Match the image to its name!</p>
-            <button id="start-game-btn" class="retro-btn start-screen-btn">Start Game</button>
-            <div class="volume-control-container">
-                <label for="theme-volume-slider">Theme Volume</label>
-                <input type="range" id="theme-volume-slider" min="-40" max="0" value="-18" step="1">
-            </div>
+        <div class="screen-content">
+            <div id="start-screen">
+                <h1 class="retro-title">Top of the Hops</h1>
+                <svg id="start-screen-graphic" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="hopGradientGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#5cb85c;stop-opacity:1" /> 
+                            <stop offset="100%" style="stop-color:#3d8b3d;stop-opacity:1" /> 
+                        </linearGradient>
+                         <filter id="थोड़ा_धुंधलापन">
+                            <feGaussianBlur in="SourceGraphic" stdDeviation="0.7"/>
+                        </filter>
+                    </defs>
+                    <path d="M50 115 L50 100" stroke="#7a5547" stroke-width="4" />
+                    <ellipse cx="50" cy="85" rx="20" ry="28" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="40" cy="75" rx="18" ry="25" fill="url(#hopGradientGreen)" transform="rotate(-15 40 75)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="60" cy="75" rx="18" ry="25" fill="url(#hopGradientGreen)" transform="rotate(15 60 75)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="50" cy="65" rx="16" ry="22" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="42" cy="58" rx="15" ry="20" fill="url(#hopGradientGreen)" transform="rotate(-20 42 58)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="58" cy="58" rx="15" ry="20" fill="url(#hopGradientGreen)" transform="rotate(20 58 58)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="50" cy="48" rx="13" ry="18" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="45" cy="42" rx="12" ry="16" fill="url(#hopGradientGreen)" transform="rotate(-25 45 42)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="55" cy="42" rx="12" ry="16" fill="url(#hopGradientGreen)" transform="rotate(25 55 42)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <ellipse cx="50" cy="35" rx="10" ry="14" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                     <ellipse cx="50" cy="25" rx="7" ry="10" fill="url(#hopGradientGreen)" filter="url(#थोड़ा_धुंधलापन)"/>
+                    <path d="M30 90 Q 35 70 50 80" fill="none" stroke="#4cae4c" stroke-width="3"/>
+                    <path d="M70 90 Q 65 70 50 80" fill="none" stroke="#4cae4c" stroke-width="3"/>
+                </svg>
+                <p class="mb-4 text-lg">Match the image to its name!</p>
+                <button id="start-game-btn" class="retro-btn start-screen-btn">Start Game</button>
             </div>
 
-        <div id="game-screen" class="hidden">
-            <h1 class="retro-title text-2xl">Top of the Hops</h1>
-            <div class="flex justify-between items-center mb-4">
-                <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span>/9</div>
-                <div id="score-info" class="text-sm">Score: <span id="current-score-display">0</span></div>
-            </div>
-            <img id="game-image" src="https://placehold.co/550x440/1a1a2e/1a1a2e?text=Loading..." alt="Match this image"> 
-            <div id="options-area" class="flex flex-wrap justify-center gap-2 my-4">
+            <div id="game-screen" class="hidden">
+                <h1 class="retro-title text-2xl">Top of the Hops</h1>
+                <div class="flex justify-between items-center mb-4">
+                    <div id="round-info" class="text-sm">Round: <span id="current-round-display">1</span>/9</div>
+                    <div id="score-info" class="text-sm">Score: <span id="current-score-display">0</span></div>
                 </div>
-            <div id="feedback-area" class="feedback-message"></div>
-        </div>
-
-        <div id="final-score-screen" class="hidden">
-            <h2 class="retro-title">Game Over!</h2>
-             <h3 class="retro-title text-xl mb-2">Top of the Hops</h3>
-            <p class="text-xl mb-2">Your Final Score: <span id="final-score-display">0</span></p>
-            <p id="player-nickname"></p> 
-            <div id="rank-icon-display"></div> 
-            <button id="play-again-final-btn" class="retro-btn">Play Again</button>
+                <img id="game-image" src="https://placehold.co/550x440/1a1a2e/1a1a2e?text=Loading..." alt="Match this image"> 
+                <div id="options-area" class="flex flex-wrap justify-center gap-2 my-4">
+                    </div>
+                <div id="feedback-area" class="feedback-message"></div>
             </div>
+
+            <div id="final-score-screen" class="hidden">
+                <h2 class="retro-title">Game Over!</h2>
+                 <h3 class="retro-title text-xl mb-2">Top of the Hops</h3>
+                <p class="text-xl mb-2">Your Final Score: <span id="final-score-display">0</span></p>
+                <p id="player-nickname"></p> 
+                <div id="rank-icon-display"></div> 
+                <button id="play-again-final-btn" class="retro-btn">Play Again</button>
+            </div>
+        </div> <div class="volume-control-container">
+            <label for="theme-volume-slider">Theme Volume</label>
+            <input type="range" id="theme-volume-slider" min="-40" max="0" value="-18" step="1">
+        </div>
 
         <div id="loading-modal" class="modal hidden">
             <div class="modal-content">
@@ -507,21 +516,21 @@
                 volume: initialThemeVolume 
             }).toDestination();
             
-            const melody = [
-                { time: "0:0:0", note: "C4", duration: "8n" },
-                { time: "0:0:2", note: "E4", duration: "8n" }, // Adjusted timing for faster BPM
-                { time: "0:1:0", note: "G4", duration: "8n" },
-                { time: "0:1:2", note: "C5", duration: "8n" },
-                { time: "0:2:0", note: "G4", duration: "8n" },
-                { time: "0:2:2", note: "E4", duration: "8n" },
-                { time: "0:3:0", note: "C4", duration: "4n" },
+            const melody = [ 
+                { time: "0:0:0", note: "C4", duration: "16n" },
+                { time: "0:0:1", note: "E4", duration: "16n" },
+                { time: "0:0:2", note: "G4", duration: "16n" },
+                { time: "0:0:3", note: "C5", duration: "16n" },
+                { time: "0:1:0", note: "G4", duration: "16n" },
+                { time: "0:1:1", note: "E4", duration: "16n" },
+                { time: "0:1:2", note: "C4", duration: "8n" },
             ];
 
             themeTune = new Tone.Sequence((time, noteEvent) => {
                 themeSynth.triggerAttackRelease(noteEvent.note, noteEvent.duration, time);
-            }, melody, "1m"); // Loop every 1 measure at faster BPM
+            }, melody, "0:2:0"); 
             themeTune.loop = true;
-            Tone.Transport.bpm.value = 160; // Increased BPM
+            Tone.Transport.bpm.value = 200; 
         }
         
         function playCorrectSound() {
@@ -560,9 +569,6 @@
         function stopThemeMusic() {
             if (typeof Tone === 'undefined' || !themeTune || !isThemePlaying) return;
             themeTune.stop();
-            // Don't stop Tone.Transport globally here if game sounds might still need it
-            // themeTune.stop() is enough to stop this specific sequence.
-            // If game sounds also use Transport, then stop it when game ends or pauses.
             isThemePlaying = false;
             console.log("Theme music stopped.");
         }
@@ -629,10 +635,12 @@
         function showInitialScreen() {
             createStars(100); 
             setupSounds(); 
-            themeVolumeSlider.value = initialThemeVolume; // Set slider to initial volume
-            if (themeSynth) themeSynth.volume.value = initialThemeVolume; // Apply to synth
+            themeVolumeSlider.value = initialThemeVolume; 
+            if (themeSynth) themeSynth.volume.value = initialThemeVolume; 
 
             startScreen.classList.remove('hidden');
+            gameScreen.classList.add('hidden'); // Ensure other screens are hidden
+            finalScoreScreen.classList.add('hidden'); // Ensure other screens are hidden
             startThemeMusic(); 
             hideLoading(); 
         }
@@ -651,10 +659,10 @@
              if (typeof Tone !== 'undefined') {
                 if (Tone.context.state !== 'running') {
                      Tone.start().then(() => { 
-                        if (!correctSynth) setupSounds(); // Make sure game sounds are ready
+                        if (!correctSynth) setupSounds(); 
                      });
                 } else if (!correctSynth) { 
-                    setupSounds(); // Game sounds might not be set up if theme was playing
+                    setupSounds(); 
                 }
             }
 
