@@ -71,11 +71,11 @@
 
     <div id="startScreen" class="start-screen-container fixed inset-0 flex flex-col items-center justify-center text-center p-8 z-50">
         <div class="bg-slate-800 p-10 rounded-xl shadow-2xl border-2 border-orange-500 w-full max-w-xl">
-            <h1 class="text-4xl font-bold text-orange-400 mb-8">Select Two Brewery Decks!</h1>
+            <h1 class="text-4xl font-bold text-orange-400 mb-8">Select Three Febfest Decks!</h1>
             <div id="deckSelectionContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6 text-sm">
             </div>
             <button id="startGameButton" class="mt-6 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md w-full text-lg button-glow disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                Select 2 Decks to Start
+                Select 3 Decks to Start
             </button>
         </div>
     </div>
@@ -95,7 +95,7 @@
                 <div id="cardStats" class="space-y-3 text-base"> 
                 </div>
             </div>
-            <p id="cardDescription" class="text-sm text-slate-400 mt-5 italic">A fine brew from a renowned craft brewery.</p> 
+            <p id="cardDescription" class="text-sm text-black mt-5 italic">A fine brew from a renowned craft brewery.</p> 
             <div id="cardTypeDisplay" class="card-type-circle absolute bottom-1 right-4 w-12 h-12 bg-slate-500 rounded-full flex items-center justify-center text-white font-bold text-lg border-2 border-slate-400 shadow-lg">
             </div>
         </div>
@@ -189,43 +189,43 @@
             Fest1: { 
                 displayName: "1. Febfest",
                 cards: [
-                    { name: "Tynt Meadow", type: "JC", category: "Mount St. Bernard Abbey", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 7.4, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.73, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.67, max: 5, unit: "/5" }] },
-                    { name: "Cherry Skies", type: "NC", category: "Vault City", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 8.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 375, max: 750, unit: "ml" }, { name: "Cost", value: 7.9, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.19, max: 5, unit: "/5" }] },
-                    { name: "Smoked Bamberg-style Lager", type: "JC", category: "Moor", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 4.2, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.21, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.3, max: 5, unit: "/5" }] },
-                    { name: "De Madrid Al Cielo", type: "EC", category: "Peninsula", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 10, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.65, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.14, max: 5, unit: "/5" }] },
-                    { name: "Dark Season", type: "AW", category: "Heaney", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.5, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.4, max: 5, unit: "/5" }] },
-                    { name: "Dusty Miller", type: "LW", category: "Overtone", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 11, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 7.02, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.06, max: 5, unit: "/5" }] },
-                    { name: "Lil Tropical", type: "AR", category: "Tiny Rebel", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 4.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 400, max: 750, unit: "ml" }, { name: "Cost", value: 4.83, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.65, max: 5, unit: "/5" }] },
-                    { name: "Macchiato Hazelnut, Praline & Coffee Porter", type: "LC", category: "Wylam", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 6.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.08, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.9, max: 5, unit: "/5" }] },
-                    { name: "Dust My Broom", type: "KW", category: "Deya", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5.8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 500, max: 750, unit: "ml" }, { name: "Cost", value: 4.99, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.01, max: 5, unit: "/5" }] },
+                    { name: "Tynt Meadow", type: "JC", category: "Mount St. Bernard Abbey", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzfx1sHPtewP8yNEy2u8lnUQmojwmtEBk6_w&s", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 7.4, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.73, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.67, max: 5, unit: "/5" }] },
+                    { name: "Cherry Skies", type: "NC", category: "Vault City", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 8.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 375, max: 750, unit: "ml" }, { name: "Cost", value: 7.9, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.19, max: 5, unit: "/5" }] },
+                    { name: "Smoked Bamberg-style Lager", type: "JC", category: "Moor", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 4.2, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.21, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.3, max: 5, unit: "/5" }] },
+                    { name: "De Madrid Al Cielo", type: "EC", category: "Peninsula", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 10, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.65, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.14, max: 5, unit: "/5" }] },
+                    { name: "Dark Season", type: "AW", category: "Heaney", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.5, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.4, max: 5, unit: "/5" }] },
+                    { name: "Dusty Miller", type: "LW", category: "Overtone", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 11, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 7.02, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.06, max: 5, unit: "/5" }] },
+                    { name: "Lil Tropical", type: "AR", category: "Tiny Rebel", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 4.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 400, max: 750, unit: "ml" }, { name: "Cost", value: 4.83, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.65, max: 5, unit: "/5" }] },
+                    { name: "Macchiato Hazelnut, Praline & Coffee Porter", type: "LC", category: "Wylam", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 6.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.08, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.9, max: 5, unit: "/5" }] },
+                    { name: "Dust My Broom", type: "KW", category: "Deya", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest : Tastes like beer.", stats: [{ name: "ABV%", value: 5.8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 500, max: 750, unit: "ml" }, { name: "Cost", value: 4.99, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.01, max: 5, unit: "/5" }] },
                     ]
             },
             Fest2: { 
                 displayName: "2. ApeFest",
                 cards: [
-                  { name: "Pot Kettle Black", type: "JC", category: "Yeastie Boys", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 6, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.5, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.7, max: 5, unit: "/5" }] },
-{ name: "Time Marches On", type: "NC", category: "Duration", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 6, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 375, max: 750, unit: "ml" }, { name: "Cost", value: 7.85, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4, max: 5, unit: "/5" }] },
-{ name: "Pastel Pils Italian Lager", type: "JC", category: "Siren", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 2.95, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.63, max: 5, unit: "/5" }] },
-{ name: "World's Apart ", type: "EC", category: "Pressure Drop", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 8.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.91, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.27, max: 5, unit: "/5" }] },
-{ name: "Pulp DIPA", type: "AW", category: "Verdant", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.82, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.09, max: 5, unit: "/5" }] },
-{ name: "Pump Up The Jam Doughnut Pale Ale", type: "LW", category: "Tny Rebal", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.77, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.61, max: 5, unit: "/5" }] },
-{ name: "Promise Of Spring", type: "AR", category: "Duration", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 4.52, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.69, max: 5, unit: "/5" }] },
-{ name: "Strictly Plutonic", type: "LC", category: "KCBC", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 6, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 473, max: 750, unit: "ml" }, { name: "Cost", value: 5.5, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.81, max: 5, unit: "/5" }] },
-{ name: "Amazonica", type: "KW", category: "Basqueland", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 6.3, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.99, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.03, max: 5, unit: "/5" }] },
+                  { name: "Pot Kettle Black", type: "JC", category: "Yeastie Boys", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 6, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.5, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.7, max: 5, unit: "/5" }] },
+{ name: "Time Marches On", type: "NC", category: "Duration", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 6, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 375, max: 750, unit: "ml" }, { name: "Cost", value: 7.85, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4, max: 5, unit: "/5" }] },
+{ name: "Pastel Pils Italian Lager", type: "JC", category: "Siren", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 5.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 2.95, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.63, max: 5, unit: "/5" }] },
+{ name: "World's Apart ", type: "EC", category: "Pressure Drop", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 8.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.91, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.27, max: 5, unit: "/5" }] },
+{ name: "Pulp DIPA", type: "AW", category: "Verdant", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.82, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.09, max: 5, unit: "/5" }] },
+{ name: "Pump Up The Jam Doughnut Pale Ale", type: "LW", category: "Tiny Rebal", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 2.77, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.61, max: 5, unit: "/5" }] },
+{ name: "Promise Of Spring", type: "AR", category: "Duration", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 4.52, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.69, max: 5, unit: "/5" }] },
+{ name: "Strictly Plutonic", type: "LC", category: "KCBC", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 6, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 473, max: 750, unit: "ml" }, { name: "Cost", value: 5.5, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.81, max: 5, unit: "/5" }] },
+{ name: "Amazonica", type: "KW", category: "Basqueland", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "ApeFest : Tastes like beer.", stats: [{ name: "ABV%", value: 6.3, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.99, max: 12, unit: "£" }, { name: "Untappd Rating", value: 4.03, max: 5, unit: "/5" }] },
 
                   ]
             },
             Fest3: { 
                 displayName: "3. Febfest June",
                 cards: [
-                    { name: "Dekadents Raisin Vanilla Rum Imperial Stout", type: "JC", category: "Puhaste", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 11.2, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 5.39, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.2, max: 5, unit: "/5" }] },
-{ name: "Triple Fruited Gose Tayberry", type: "NC", category: "North Brewing Co", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 4.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.36, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.9, max: 5, unit: "/5" }] },
-{ name: "Zoom Boom", type: "JC", category: "Puhaste", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 4.79, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.7, max: 5, unit: "/5" }] },
-{ name: "LupulusX Olicana ", type: "EC", category: "Buxton", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5.4, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 3.6, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.925, max: 5, unit: "/5" }] },
-{ name: "My Garden Of Forking Paths", type: "AW", category: "By The River Brew Co", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5.7, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 4.75, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.5, max: 5, unit: "/5" }] },
-{ name: "Blue Screen", type: "AR", category: "Peninsula", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.65, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.6, max: 5, unit: "/5" }] },
-{ name: "Dark Lager", type: "LC", category: "Stu Mostow", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 5.3, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 3.32, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.1, max: 5, unit: "/5" }] },
-{ name: "Monstercat", type: "KW", category: "Polly's", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Tastes like beer.", stats: [{ name: "ABV%", value: 7.1, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.45, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.8, max: 5, unit: "/5" }] },
+                    { name: "Dekadents Raisin Vanilla Rum Imperial Stout", type: "JC", category: "Puhaste", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 11.2, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 5.39, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.2, max: 5, unit: "/5" }] },
+{ name: "Triple Fruited Gose Tayberry", type: "NC", category: "North Brewing Co", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 4.5, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.36, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.9, max: 5, unit: "/5" }] },
+{ name: "Zoom Boom", type: "JC", category: "Puhaste", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 330, max: 750, unit: "ml" }, { name: "Cost", value: 4.79, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.7, max: 5, unit: "/5" }] },
+{ name: "LupulusX Olicana ", type: "EC", category: "Buxton", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 5.4, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 3.6, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.925, max: 5, unit: "/5" }] },
+{ name: "My Garden Of Forking Paths", type: "AW", category: "By The River Brew Co", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 5.7, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 4.75, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.5, max: 5, unit: "/5" }] },
+{ name: "Blue Screen", type: "AR", category: "Peninsula", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 8, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 6.65, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.6, max: 5, unit: "/5" }] },
+{ name: "Dark Lager", type: "LC", category: "Stu Mostow", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 5.3, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 3.32, max: 12, unit: "£" }, { name: "Untappd Rating", value: 3.1, max: 5, unit: "/5" }] },
+{ name: "Monstercat", type: "KW", category: "Polly's", image: "https://placehold.co/300x300/f59e0b/fef3c7?text=Hoppy+Haze&font=inter", description: "Febfest June : Tastes like beer.", stats: [{ name: "ABV%", value: 7.1, max: 11.5, unit: "%" }, { name: "Tinnie Size", value: 440, max: 750, unit: "ml" }, { name: "Cost", value: 5.45, max: 12, unit: "£" }, { name: "Untappd Rating", value: 2.8, max: 5, unit: "/5" }] },
                     ]
             },
             Fest4: { 
@@ -374,7 +374,7 @@
                 cardImageDisplay.src = "https://placehold.co/300x300/7f1d1d/fee2e2?text=Select+Decks&font=inter"; 
                 cardStatsDisplay.innerHTML = '<p class="text-red-400 text-center">Select two decks to start!</p>';
                 cardCategoryDisplay.textContent = "N/A";
-                cardDescriptionDisplay.textContent = "Please select two decks from the main menu.";
+                cardDescriptionDisplay.textContent = "Please select three Febfest decks to play with.";
                 if(cardTypeDisplayElement) cardTypeDisplayElement.textContent = '--'; 
                 trumpCardElement.classList.add(cardDeckBackgroundColors["DEFAULT"]); 
                 cardNameDisplay.classList.add(cardDeckNameTextColors["DEFAULT"]); 
@@ -472,7 +472,7 @@
         }
         
         function startGameWithSelectedDecks() {
-            if (selectedDeckKeys.length !== 2) {
+            if (selectedDeckKeys.length !== 3) {
                 return;
             }
 
@@ -505,15 +505,15 @@
                 selectedDeckKeys.push(box.dataset.deckKey);
             });
 
-            if (selectedDeckKeys.length === 2) {
+            if (selectedDeckKeys.length === 3) {
                 startGameButton.disabled = false;
                 startGameButton.textContent = "Start Game with Selected Decks!";
-            } else if (selectedDeckKeys.length > 2) {
+            } else if (selectedDeckKeys.length > 3) {
                 startGameButton.disabled = true;
-                startGameButton.textContent = "Too Many Decks (Pick 2)";
+                startGameButton.textContent = "Too Many Decks (Pick 3)";
             } else {
                 startGameButton.disabled = true;
-                startGameButton.textContent = `Select ${2 - selectedDeckKeys.length} More Deck${selectedDeckKeys.length === 1 ? '' : 's'}`;
+                startGameButton.textContent = `Select ${3 - selectedDeckKeys.length} More Deck${selectedDeckKeys.length === 1 ? '' : 's'}`;
             }
         }
 
@@ -530,8 +530,8 @@
                 deckBox.addEventListener('click', () => {
                     deckBox.classList.toggle('selected');
                     const currentlySelectedBoxes = deckSelectionContainer.querySelectorAll('.deck-box.selected');
-                    if (currentlySelectedBoxes.length > 2) {
-                        if(deckBox.classList.contains('selected') && currentlySelectedBoxes.length > 2) {
+                    if (currentlySelectedBoxes.length > 3) {
+                        if(deckBox.classList.contains('selected') && currentlySelectedBoxes.length > 3) {
                            for(let i=0; i < currentlySelectedBoxes.length; i++){
                                if(currentlySelectedBoxes[i] !== deckBox){
                                    currentlySelectedBoxes[i].classList.remove('selected');
